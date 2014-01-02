@@ -125,6 +125,11 @@ article.news
     width: 530px;
 }
 
+article.article 
+{
+    width: 530px;
+}
+
 article header
 {
     height: 32px;
