@@ -38,6 +38,11 @@ a.button{
     display:block;
 }
 
+.facebook{
+    background:url(images/facebook.png) no-repeat;
+    display:block;
+}
+
 .googleplus{
     background:url(images/googleplus.png) no-repeat;
     display:block;
@@ -48,9 +53,9 @@ a.button{
     display:block;
 }
 
-.facebook{
-    background:url(images/facebook.png) no-repeat;
-    display:block;
+.twitter{
+    background: url(images/twitter.png) no-repeat;
+    display: block;
 }
 
 strong, b
