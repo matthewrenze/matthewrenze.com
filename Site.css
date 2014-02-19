@@ -43,6 +43,11 @@ a.button{
     display:block;
 }
 
+.github{
+    background: url(images/github.png) no-repeat;
+    display: block;
+}
+
 .googleplus{
     background:url(images/googleplus.png) no-repeat;
     display:block;
