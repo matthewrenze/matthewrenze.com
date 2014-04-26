@@ -76,27 +76,36 @@ h1, h2, h3
 
 header
 {
-    height: 24px;
+    display: block;
+    height: 56px;
+}
+
+body header 
+{
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #DBDBDB;    
 }
 
 header h1
 {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 100;
+    float: left;
 }
 
 nav
 {
-    border-bottom: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: #DBDBDB;
-    height: 24px;
+    height: 56px;
+    float: right;
 }
 
 nav ul
 {
     list-style-type: none;
+    margin-top: 18px;
     padding: 0;
+    vertical-align: middle;
 }
 
 nav ul li
@@ -114,7 +123,6 @@ nav ul li a:visited
     padding-right: 20px;
 }
 
-
 nav ul li a:hover
 {
     color: #2a2a2a
@@ -123,11 +131,9 @@ nav ul li a:hover
 article
 {
     display: block;
-    /*min-height: 256px;*/
-    /*padding-right: 16px;
-    border-right: solid;
-    border-right-width: 1px;
-    border-right-color: #DBDBDB;*/      
+    min-height: 96px;
+    padding-top: 16px;
+    padding-bottom: 16px;      
 }
 
 article.news 
@@ -143,15 +149,17 @@ article.article
 article header
 {
     height: 32px;
+    border-bottom: none;
 }
 
 article header h1
 {
     margin-top: 16px;
     margin-bottom: 24px;
-    font-size: 28px;
-    color: #707070;
+    font-size: 30px;
+    color: #5f5e5c;
     border-bottom: none;
+    float: none;
 }
 
 article h1
@@ -185,7 +193,8 @@ article img.thumbnail
     display: inline;
     float: right;
     height: 128px;
-    margin: 4px;    
+    margin: 4px;
+    border: none;    
 }
 
 article section 
@@ -195,6 +204,16 @@ article section
     border-top: solid;
     border-top-width: 1px;
     border-top-color: #DBDBDB;    
+}
+
+article h1.resume
+{
+    font-size: 1.6em;
+    padding-bottom: 4px;
+    margin-bottom: 14px;
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #DBDBDB;
 }
 
 article section.resume
@@ -207,6 +226,18 @@ article section.resume
 ul.resume 
 {
     margin-top: 0px;    
+}
+
+article section h2 
+{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;    
+}
+
+article section ul 
+{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;    
 }
 
 aside
