@@ -188,6 +188,13 @@ article h3
     margin-bottom: 0px;   
 }
 
+article img
+{
+    display: inline;    
+    border: none;
+    max-width: 740px;
+}
+
 article img.thumbnail
 {
     display: inline;

@@ -1,0 +1,514 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Clean Architecture in ASP.NET MVC 5 - Matthew Renze</title>
+    <meta name="description" content="How to implement Uncle Bob's Clean Architecture in ASP.NET MVC 5" />
+    <meta name="keywords" content="matthew renze, robert martin, uncle bob, clean architecture, screaming architecture, asp.net mvc 5"/>
+    <meta name="author" content="Matthew Renze" />
+    <meta property="og:title" content="Clearn Architecture in ASP.NET MVC5" />
+    <meta property="og:image" content="http://www.matthewrenze.com/clean-architecture-in-asp-net-mvc-5/images/thumbnail.png"/>
+    <meta property="og:url" content="http://www.matthewrenze.com/articles/clean-architecture-in-asp-net-mvc-5"/>
+    <meta property="og:site_name" content="Matthew Renze"/>
+    <meta property="og:type" content="article"/>
+    <link href="../../site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-34791648-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+ </head>
+<body>
+    <header>
+        <h1>Matthew Renze</h1>
+        <nav>
+            <ul>
+                <li><a href="/home.html">Home</a></li>
+                <!--<li><a href="/articles.html">Articles</a></li>-->
+                <li><a href="/presentations.html">Presentations</a></li>
+                <li><a href="/software.html">Software</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <article class="article">
+        <header>
+            <h1>Clean Architecture in ASP.NET MVC 5</h1>
+        </header>
+        <p>
+            Author: <a href="/about.html">Matthew Renze</a><br/>
+            Posted: 04/27/2015
+        </p> 
+        <p>
+            I'm a big fan of <a href="http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="blank">Clean Architecture</a> patterns, practices, and principles.  
+            One of the Clean Architecture practices that I'm particularly fond of is the <a href="http://blog.8thlight.com/uncle-bob/2011/09/30/Screaming-Architecture.html" target="blank">Screaming Architecture</a> practice promoted by <a href="http://en.wikipedia.org/wiki/Robert_Cecil_Martin">Robert C. Martin</a> (aka. Uncle Bob).  
+            This practice states that we should organize our software's architecture in such a way that it should scream the intent of our system; hence the name "Screaming Architecture".  
+            One of the ways we can implement this practice is by having the top-level folder structure of our source code represent the high-level use cases of our application.
+        </p>
+        <p>
+            While I've been able to implement this architectural practice in many of the applications I've built over the past few years, I have always struggled with implementing it in my <a href="http://www.asp.net/mvc/mvc5" target="blank">ASP.NET MVC</a> applications.  
+            There are several technical challenges to get this to work in ASP.NET MVC and I have yet to find a single source of information on the internet that shows you how to overcome all of these technical obstacles in one place.
+        </p>
+        <p>
+            So, I decided this topic was important enough to take the time to create an <a href="https://github.com/matthewrenze/clean-architecture-in-asp-net-mvc-5" target="blank">open-source sample project</a> and write an article to document the steps necessary to implement the Screaming Architecture practice in ASP.NET MVC 5.
+            The goal of this article and corresponding open-source sample project is to help others learn how to incorporate this practice into their ASP.NET MVC web applications.
+        </p>
+        <h2>Create a new empty ASP.NET MVC project</h2>
+        <p>
+            To keep things simple, we're going to use an empty ASP.NET project template as our starting point.  
+            However, you could also start with an MVC project template and modify the instructions below to preserve the automatically generated models, views, and controllers, and refactor them into the new folder layout.
+        </p>
+        <ol>
+            <li>
+                <p>Create a new ASP.NET MVC 5 project.</p>
+                <img src="images/step-1-1.png" alt="New Project dialog box"/>
+            </li>
+
+            <li>
+                <p>Add folders and core references for MVC.</p>
+                <img src="images/step-1-2.png" alt="New ASP.NET Project dialog box" />
+            </li>
+        </ol>
+        <h2>Create a custom razor view engine</h2>
+        <p>
+            Since our use-case-driven folder structure does not match the out-of-the-box MVC folder structure, we need to tell ASP.NET MVC where to find the view files, given our custom folder structure.  
+            We do this with a custom razor view engine.
+        </p>      
+        <ol>
+            <li>
+                <p>Create a new class called CustomRazorViewEngine.cs, which inherits from RazorViewEngine, in the root folder of the project.</p>
+            </li>
+            <li>
+                <p>Add "~/{1}/Views/{0}.cshtml" to the view location formats property of the new custom view engine.</p>
+            </li>
+            <li>
+                <p>Add "~/Shared/Views/{0}.cshtml" to the partial view location formats property of the new custom view engine.</p>
+            </li>
+        </ol>
+        <div style="border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+            <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                <span style="color:#0000ff">public</span> <span style="color:#0000ff">class</span> <span style="color:#2b91af">CustomRazorViewEngine</span> : <span style="color:#2b91af">RazorViewEngine</span><br>
+                {<br>
+                &#160;&#160;&#160;&#160;<span style="color:#0000ff">public</span> CustomRazorViewEngine()<br>
+                &#160;&#160;&#160;&#160;{<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ViewLocationFormats = <span style="color:#0000ff">new</span> <span style="color:#0000ff">string</span>[]<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#a31515">&quot;~/{1}/Views/{0}.cshtml&quot;</span>,<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;};<br>
+                <br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;PartialViewLocationFormats = <span style="color:#0000ff">new</span> <span style="color:#0000ff">string</span>[]<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;{<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#a31515">&quot;~/Shared/Views/{0}.cshtml&quot;</span><br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;};<br>
+                &#160;&#160;&#160;&#160;}<br>
+                }
+            </div>
+        </div>
+        <p>
+            The {1} and {0} in the location formats correspond to the name of the controller and the name of the view respectively.
+        </p>
+        <h2>Add the custom razor view engine to Global.asax</h2>
+        <p>In order to use the new custom view engine, we need to clear the existing default view engines and add our new custom view engine in Global.asax.</p>
+        <ol>
+            <li>
+                <p>Clear the view engines in Global.asax.</p>
+            </li>
+            <li>
+                <p>Add the new custom razor view engine in Global.asax.</p>
+            </li>
+        </ol>
+        <div style="border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+            <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                <span style="color:#0000ff">public</span> <span style="color:#0000ff">class</span> <span style="color:#2b91af">MvcApplication</span> : System.Web.<span style="color:#2b91af">HttpApplication</span><br>
+                {<br>
+                &#160;&#160;&#160;&#160;<span style="color:#0000ff">protected</span> <span style="color:#0000ff">void</span> Application_Start()<br>
+                &#160;&#160;&#160;&#160;{<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#2b91af">ViewEngines</span>.Engines.Clear();<br>
+                <br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#2b91af">ViewEngines</span>.Engines.Add(<span style="color:#0000ff">new</span> <span style="color:#2b91af">CustomRazorViewEngine</span>());<br>
+                <br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#2b91af">AreaRegistration</span>.RegisterAllAreas();<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<br>
+                &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#2b91af">RouteConfig</span>.RegisterRoutes(<span style="color:#2b91af">RouteTable</span>.Routes);<br>
+                &#160;&#160;&#160;&#160;}<br>
+                }
+            </div>
+        </div>
+        <h2>Create shared views</h2>
+        <p>We need to create a root-level folder for views that are shared across the high-level use cases of our application (e.g. our site layout page) and configure our MVC application to use these shared views.</p>
+        <ol>
+            <li>
+                <p>Create a new root folder called Shared and a child folder called Views.</p>                
+                <img src="images/step-4-1.png" alt="Creating Shared/Views folder in solution explorer" />
+            </li>
+            <li>
+                <p>Create a _Layout.cshtml file in the Shared/Views folder.</p>
+                <p>
+                    <div style="width: 720px; border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="background:#ffff00">@</span><span style="color:#0000ff">using</span> System.Web.Mvc.Html<br>
+                            <span style="background:#ffff00">@{</span><br>
+                            &#160;&#160;&#160;&#160;Layout = <span style="color:#0000ff">null</span>;<br>
+                            }<br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">!DOCTYPE</span> <span style="color:#ff0000">html</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">html</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">head</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">meta</span> <span style="color:#ff0000">name</span><span style="color:#0000ff">=&quot;viewport&quot;</span> <span style="color:#ff0000">content</span><span style="color:#0000ff">=&quot;width=device-width&quot;</span> <span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">title</span><span style="color:#0000ff">&gt;</span>Clean Architecture in ASP.NET MVC 5<span style="color:#0000ff">&lt;/</span><span style="color:#800000">title</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">link</span> <span style="color:#ff0000">href</span><span style="color:#0000ff">=&quot;</span><span style="background:#ffff00">@</span>Url.Content(<span style="color:#a31515">&quot;~/Content/Site.css&quot;</span>)<span style="color:#0000ff">&quot;</span> <span style="color:#ff0000">rel</span><span style="color:#0000ff">=&quot;stylesheet&quot;</span> <span style="color:#ff0000">type</span><span style="color:#0000ff">=&quot;text/css&quot;</span> <span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">link</span> <span style="color:#ff0000">href</span><span style="color:#0000ff">=&quot;</span><span style="background:#ffff00">@</span>Url.Content(<span style="color:#a31515">&quot;~/Content/Bootstrap.css&quot;</span>)<span style="color:#0000ff">&quot;</span> <span style="color:#ff0000">rel</span><span style="color:#0000ff">=&quot;stylesheet&quot;</span> <span style="color:#ff0000">type</span><span style="color:#0000ff">=&quot;text/css&quot;</span> <span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">head</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">body</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">div</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;navbar navbar-inverse navbar-fixed-top&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">div</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;container&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">div</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;navbar-header&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">button</span> <span style="color:#ff0000">type</span><span style="color:#0000ff">=&quot;button&quot;</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;navbar-toggle&quot;</span> <span style="color:#ff0000">data-toggle</span><span style="color:#0000ff">=&quot;collapse&quot;</span> <span style="color:#ff0000">data-target</span><span style="color:#0000ff">=&quot;.navbar-collapse&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">span</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;icon-bar&quot;&gt;&lt;/</span><span style="color:#800000">span</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">span</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;icon-bar&quot;&gt;&lt;/</span><span style="color:#800000">span</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">span</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;icon-bar&quot;&gt;&lt;/</span><span style="color:#800000">span</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">button</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.ActionLink(<span style="color:#a31515">&quot;Clean Architecture&quot;</span>, <span style="color:#a31515">&quot;index&quot;</span>, <span style="color:#a31515">&quot;home&quot;</span>, <span style="color:#0000ff">new</span> { area = <span style="color:#a31515">&quot;&quot;</span> }, <span style="color:#0000ff">new</span> { @class = <span style="color:#a31515">&quot;navbar-brand&quot;</span> })<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">div</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;navbar-collapse collapse&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">ul</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;nav navbar-nav&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">li</span><span style="color:#0000ff">&gt;</span><span style="background:#ffff00">@</span>Html.ActionLink(<span style="color:#a31515">&quot;Home&quot;</span>, <span style="color:#a31515">&quot;Index&quot;</span>, <span style="color:#a31515">&quot;home&quot;</span>)<span style="color:#0000ff">&lt;/</span><span style="color:#800000">li</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">li</span><span style="color:#0000ff">&gt;</span><span style="background:#ffff00">@</span>Html.ActionLink(<span style="color:#a31515">&quot;Products&quot;</span>, <span style="color:#a31515">&quot;index&quot;</span>, <span style="color:#a31515">&quot;products&quot;</span>)<span style="color:#0000ff">&lt;/</span><span style="color:#800000">li</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">li</span><span style="color:#0000ff">&gt;</span><span style="background:#ffff00">@</span>Html.ActionLink(<span style="color:#a31515">&quot;Contact&quot;</span>, <span style="color:#a31515">&quot;index&quot;</span>, <span style="color:#a31515">&quot;contact&quot;</span>)<span style="color:#0000ff">&lt;/</span><span style="color:#800000">li</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">ul</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">div</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;container body-content&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>RenderBody()<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">hr</span> <span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">footer</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">p</span><span style="color:#0000ff">&gt;</span><span style="color:#ff0000">&amp;copy;</span> <span style="background:#ffff00">@</span><span style="color:#2b91af">DateTime</span>.Now.Year - <span style="color:#0000ff">&lt;</span><span style="color:#800000">a</span> <span style="color:#ff0000">href</span><span style="color:#0000ff">=&quot;http://www.matthewrenze.com&quot;</span> <span style="color:#ff0000">target</span><span style="color:#0000ff">=&quot;blank&quot;&gt;</span>Matthew Renze<span style="color:#0000ff">&lt;/</span><span style="color:#800000">a</span><span style="color:#0000ff">&gt;&lt;/</span><span style="color:#800000">p</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">footer</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">body</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&lt;/</span><span style="color:#800000">html</span><span style="color:#0000ff">&gt;</span>
+                        </div>
+                    </div>
+                </p>
+            </li>
+            <li>
+                <p>Create an Error.cshtml file in the Shared/Views folder (optional).</p>
+                <p>
+                    <div style="width: 720px; border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="background:#ffff00">@model </span>System.Web.Mvc.<span style="color:#2b91af">HandleErrorInfo</span><br>
+                            <br>
+                            <span style="background:#ffff00">@{</span><br>
+                            &#160;&#160;&#160;&#160;ViewBag.Title = <span style="color:#a31515">&quot;Error&quot;</span>;<br>
+                            }<br>
+                            <br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">h1</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;text-danger&quot;&gt;</span>Error.<span style="color:#0000ff">&lt;/</span><span style="color:#800000">h1</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">h2</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;text-danger&quot;&gt;</span>An error occurred while processing your request.<span style="color:#0000ff">&lt;/</span><span style="color:#800000">h2</span><span style="color:#0000ff">&gt;</span>
+                        </div>
+                    </div>
+                </p>
+            </li>
+            <li>
+                <p>Create a _ViewStart.cshtml file in the root folder with Layout = "~/Shared/Views/_Layout.cshtml".</p>
+                <p>
+                    <div style="border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="background:#ffff00">@{</span><br>
+                            &#160;&#160;&#160;&#160;Layout = &quot;~/Shared/Views/_Layout.cshtml&quot;;<br>
+                            }
+                        </div>
+                    </div>    
+                </p>
+            </li>
+            <li>
+                <p>Merge the contents of the Shared/Views web.config into the app-level web.config.</p>
+                <p>
+                    <div style="width:720px; border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="color:#0000ff">&lt;?</span><span style="color:#a31515">xml</span><span style="color:#0000ff"> </span><span style="color:#ff0000">version</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">1.0</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">encoding</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">utf-8</span>&quot;<span style="color:#0000ff">?&gt;</span><br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#a31515">configuration</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;</span><span style="color:#a31515">configSections</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">sectionGroup</span><span style="color:#0000ff"> </span><span style="color:#ff0000">name</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">system.web.webPages.razor</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">type</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.WebPages.Razor.Configuration.RazorWebSectionGroup, System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35</span>&quot;<span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">section</span><span style="color:#0000ff"> </span><span style="color:#ff0000">name</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">host</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">type</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.WebPages.Razor.Configuration.HostSection, System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">requirePermission</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">false</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">section</span><span style="color:#0000ff"> </span><span style="color:#ff0000">name</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">pages</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">type</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.WebPages.Razor.Configuration.RazorPagesSection, System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">requirePermission</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">false</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#a31515">sectionGroup</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;/</span><span style="color:#a31515">configSections</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;</span><span style="color:#a31515">appSettings</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">key</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">webpages:Version</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">value</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">3.0.0.0</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">key</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">webpages:Enabled</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">value</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">false</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">key</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">ClientValidationEnabled</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">value</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">true</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">key</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">UnobtrusiveJavaScriptEnabled</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">value</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">true</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;/</span><span style="color:#a31515">appSettings</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;</span><span style="color:#a31515">system.web</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">compilation</span><span style="color:#0000ff"> </span><span style="color:#ff0000">debug</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">true</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">targetFramework</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">4.5</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">httpRuntime</span><span style="color:#0000ff"> </span><span style="color:#ff0000">targetFramework</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">4.5</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;/</span><span style="color:#a31515">system.web</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;</span><span style="color:#a31515">system.web.webPages.razor</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">host</span><span style="color:#0000ff"> </span><span style="color:#ff0000">factoryType</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.Mvc.MvcWebRazorHostFactory, System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">pages</span><span style="color:#0000ff"> </span><span style="color:#ff0000">pageBaseType</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.Mvc.WebViewPage</span>&quot;<span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">namespaces</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">namespace</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.Mvc</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">namespace</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.Mvc.Ajax</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">namespace</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.Mvc.Html</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">namespace</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.Routing</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">namespace</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">CleanArchitectureAspNetMvc5</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#a31515">namespaces</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#a31515">pages</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;/</span><span style="color:#a31515">system.web.webPages.razor</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;</span><span style="color:#a31515">system.webServer</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">handlers</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">remove</span><span style="color:#0000ff"> </span><span style="color:#ff0000">name</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">BlockViewHandler</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">name</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">BlockViewHandler</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">path</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">*</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">verb</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">*</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">preCondition</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">integratedMode</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">type</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.HttpNotFoundHandler</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#a31515">handlers</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;/</span><span style="color:#a31515">system.webServer</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;!--</span><span style="color:#008000"> Remaining web.config sections go here. </span><span style="color:#0000ff">--&gt;</span><br>
+                            <span style="color:#0000ff">&lt;/</span><span style="color:#a31515">configuration</span><span style="color:#0000ff">&gt;</span>
+                        </div>
+                    </div>
+                </p>
+                <p>This is done so that the Shared/Views web.config settings apply to all views in our application and thus we don't have to create a web.config file for each view folder in our project.</p>
+            </li>
+            <li>
+                <p>Set the BlockViewHandler path to "*.cshtml" in the merged web.config.</p>
+                <p>
+                    <div style="width:720px; border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="color:#0000ff"> &lt;</span><span style="color:#a31515">system.webServer</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">handlers</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">remove</span><span style="color:#0000ff"> </span><span style="color:#ff0000">name</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">BlockViewHandler</span>&quot;<span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#a31515">add</span><span style="color:#0000ff"> </span><span style="color:#ff0000">name</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">BlockViewHandler</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">path</span><span style="color:#0000ff">=</span>&quot;<span style="background:#ffff00" style="color:#0000ff">*.cshtml</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">verb</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">*</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">preCondition</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">integratedMode</span>&quot;<span style="color:#0000ff"> </span><span style="color:#ff0000">type</span><span style="color:#0000ff">=</span>&quot;<span style="color:#0000ff">System.Web.HttpNotFoundHandler</span>&quot;<span style="color:#0000ff"> /&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#a31515">handlers</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&#160;&#160;&lt;/</span><span style="color:#a31515">system.webServer</span><span style="color:#0000ff">&gt;</span>
+                        </div>
+                    </div>
+                </p>
+            </li>
+        </ol>
+        
+        <h2>Create folders based on high-level use cases</h2>
+        <p>
+            Now we can create our root-level folders that correspond to the high-level use cases of our application.  
+            In the case of our sample application, we're going to create three high-level use cases (i.e. Home, Products, and Contact) and corresponding models, views, and controllers.
+        </p>
+        <ol>
+            <li>
+                <p>Delete the unused root-level Models, Views, and Controllers folders.</p>
+                <img src="images/step-5-1.png" alt="Deleting rool-level controllers, models and views folders." />
+            </li>
+            <li>
+                <p>Create top-level use-case folders.</p>
+                <img src="images/step-5-2.png" alt="Creating new rool-level use-case folders." />
+            </li>            
+            <li>
+                <p>Create the corresponding Models, Views, and Controllers folders for each high-level use case.</p>
+                <img src="images/step-5-3.png" alt="Creating new model, view, and controller subfolders." />
+            </li>
+            <li>
+                <p>Create our models.</p>
+                <p>
+                    <div style="border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="color:#0000ff">public</span> <span style="color:#0000ff">class</span> <span style="color:#2b91af">Product</span><br>
+                            {<br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">public</span> <span style="color:#0000ff">int</span> Id { <span style="color:#0000ff">get</span>; <span style="color:#0000ff">set</span>; }<br>
+                            <br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">public</span> <span style="color:#0000ff">string</span> Name { <span style="color:#0000ff">get</span>; <span style="color:#0000ff">set</span>; }<br>
+                            <br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">public</span> <span style="color:#0000ff">decimal</span> Price { <span style="color:#0000ff">get</span>; <span style="color:#0000ff">set</span>; }<br>
+                            }
+                        </div>
+                    </div>
+                </p>
+            </li>
+            <li>
+                <p></p>Create our views.
+                <p>
+                    <div style="width:720px; border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="background:#ffff00">@model </span><span style="color:#2b91af">IEnumerable</span>&lt;CleanArchitectureAspNetMvc5.Products.Models.<span style="color:#2b91af">Product</span>&gt;<br>
+                            <br>
+                            <span style="background:#ffff00">@{</span><br>
+                            &#160;&#160;&#160;&#160;ViewBag.Title = <span style="color:#a31515">&quot;Products&quot;</span>;<br>
+                            }<br>
+                            <br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">h2</span><span style="color:#0000ff">&gt;</span>Products<span style="color:#0000ff">&lt;/</span><span style="color:#800000">h2</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">table</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;table&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">tr</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayNameFor(model =&gt; model.Name)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayNameFor(model =&gt; model.Price)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;&lt;/</span><span style="color:#800000">th</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">tr</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span><span style="color:#0000ff">foreach</span> (<span style="color:#0000ff">var</span> item <span style="color:#0000ff">in</span> Model)<br>
+                            &#160;&#160;&#160;&#160;{<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">tr</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">td</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayFor(modelItem =&gt; item.Name)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">td</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">td</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayFor(modelItem =&gt; item.Price)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">td</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">td</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.ActionLink(<span style="color:#a31515">&quot;Details&quot;</span>, <span style="color:#a31515">&quot;Details&quot;</span>, <span style="color:#0000ff">new</span> { id = item.Id })<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">td</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">tr</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;}<br>
+                            <span style="color:#0000ff">&lt;/</span><span style="color:#800000">table</span><span style="color:#0000ff">&gt;</span>
+                        </div>
+                    </div>
+                </p>
+                <p>
+
+                    <div style="border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="background:#ffff00">@model </span>CleanArchitectureAspNetMvc5.Products.Models.<span style="color:#2b91af">Product</span><br>
+                            <br>
+                            <span style="background:#ffff00">@{</span><br>
+                            &#160;&#160;&#160;&#160;ViewBag.Title = <span style="color:#a31515">&quot;Product Details&quot;</span>;<br>
+                            }<br>
+                            <br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">h2</span><span style="color:#0000ff">&gt;</span>Product Details<span style="color:#0000ff">&lt;/</span><span style="color:#800000">h2</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&lt;</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">h4</span><span style="color:#0000ff">&gt;</span>Product<span style="color:#0000ff">&lt;/</span><span style="color:#800000">h4</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">hr</span> <span style="color:#0000ff">/&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">dl</span> <span style="color:#ff0000">class</span><span style="color:#0000ff">=&quot;dl-horizontal&quot;&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">dt</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayNameFor(model =&gt; model.Name)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">dt</span><span style="color:#0000ff">&gt;</span><br>
+                            <br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">dd</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayFor(model =&gt; model.Name)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">dd</span><span style="color:#0000ff">&gt;</span><br>
+                            <br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">dt</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayNameFor(model =&gt; model.Price)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">dt</span><span style="color:#0000ff">&gt;</span><br>
+                            <br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">dd</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.DisplayFor(model =&gt; model.Price)<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">dd</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;/</span><span style="color:#800000">dl</span><span style="color:#0000ff">&gt;</span><br>
+                            <span style="color:#0000ff">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">&lt;</span><span style="color:#800000">p</span><span style="color:#0000ff">&gt;</span><br>
+                            &#160;&#160;&#160;&#160;<span style="background:#ffff00">@</span>Html.ActionLink(<span style="color:#a31515">&quot;Back to List&quot;</span>, <span style="color:#a31515">&quot;Index&quot;</span>)<br>
+                            <span style="color:#0000ff">&lt;/</span><span style="color:#800000">p</span><span style="color:#0000ff">&gt;</span>
+                        </div>
+                    </div>
+
+                </p>
+            </li>
+            <li>
+                <p>Create our controllers.</p>
+                <p>
+                    <div style="width:720px; border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="color:#0000ff">public</span> <span style="color:#0000ff">class</span> <span style="color:#2b91af">ProductsController</span> : <span style="color:#2b91af">Controller</span><br>
+                            {<br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">private</span> <span style="color:#0000ff">readonly</span> <span style="color:#2b91af">List</span>&lt;<span style="color:#2b91af">Product</span>&gt; _products = <span style="color:#0000ff">new</span> <span style="color:#2b91af">List</span>&lt;<span style="color:#2b91af">Product</span>&gt;<br>
+                            &#160;&#160;&#160;&#160;{<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">new</span> <span style="color:#2b91af">Product</span> { Id = 1, Name = <span style="color:#a31515">&quot;Ice Cream&quot;</span>, Price = 1.23m },<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">new</span> <span style="color:#2b91af">Product</span> { Id = 2, Name = <span style="color:#a31515">&quot;Cake&quot;</span>, Price = 2.34m }<br>
+                            &#160;&#160;&#160;&#160;};<br>
+                            <br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">public</span> <span style="color:#2b91af">ActionResult</span> Index()<br>
+                            &#160;&#160;&#160;&#160;{<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">return</span> View(_products);<br>
+                            &#160;&#160;&#160;&#160;}<br>
+                            <br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">public</span> <span style="color:#2b91af">ActionResult</span> Details(<span style="color:#0000ff">int</span> id)<br>
+                            &#160;&#160;&#160;&#160;{<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">var</span> product = _products<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;.First(p =&gt; p.Id == id);<br>
+                            <br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#0000ff">return</span> View(product);<br>
+                            &#160;&#160;&#160;&#160;}<br>
+                            }
+                        </div>
+                    </div>
+                </p>
+            </li>
+        </ol>
+        <p>
+            Please note that we should not use the Create Controller command from the context menu of the Controllers folder to create our controller as it will attempt to scaffold out a folder containing the views for the new controller in the first folder that it finds named Views.
+            Instead, create a new empty class called [OurUseCaseName]Controller.cs and have it inherit from System.Web.Mvc.Controller.
+        </p>
+        <h2>Enable routing to existing files</h2>
+        <p>
+            If we implement the screaming architecture folder structure, our root-level folder names will exactly match the first segment of our URI.  
+            For example, if we have ~/Customers as our folder for the customer use cases we will navigate to that resources controller via http://www.example.com/customers.  
+            However, by default, IIS thinks we are asking to browse the Customers folder in the root of our application, and since we have directory browsing disabled by default, we will get a 403.14 error (Forbidden).
+        </p>
+        <p>The solution to this problem is to complete the following step:</p>
+        <ol>
+            <li>
+                <p>Add "routes.RouteExistingFiles = true;" to RouteConfig.cs.</p>
+                <p>
+                    <div style="width:720px; border: #DBDBDB 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+                        <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                            <span style="color:#0000ff">public</span> <span style="color:#0000ff">class</span> <span style="color:#2b91af">RouteConfig</span><br>
+                            {<br>
+                            &#160;&#160;&#160;&#160;<span style="color:#0000ff">public</span> <span style="color:#0000ff">static</span> <span style="color:#0000ff">void</span> RegisterRoutes(<span style="color:#2b91af">RouteCollection</span> routes)<br>
+                            &#160;&#160;&#160;&#160;{<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;routes.RouteExistingFiles = <span style="color:#0000ff">true</span>;<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;routes.IgnoreRoute(<span style="color:#a31515">&quot;{resource}.axd/{*pathInfo}&quot;</span>);<br>
+                            <br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;routes.MapRoute(<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;name: <span style="color:#a31515">&quot;Default&quot;</span>,<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;url: <span style="color:#a31515">&quot;{controller}/{action}/{id}&quot;</span>,<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;defaults: <span style="color:#0000ff">new</span> { controller = <span style="color:#a31515">&quot;Home&quot;</span>, action = <span style="color:#a31515">&quot;Index&quot;</span>, id = <span style="color:#2b91af">UrlParameter</span>.Optional }<br>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;);<br>
+                            &#160;&#160;&#160;&#160;}<br>
+                            }
+                        </div>
+                    </div>
+                </p>                
+            </li>
+        </ol>
+        <p>This tells ASP.NET routing to handle all incoming requests, even those that match an existing file or folder.</p>
+        <h2>Add content</h2>
+        <ol>
+            <li>
+                <p>Create a folder called Content in the root folder.</p>
+            </li>
+            <li>
+                <p>Add any CSS files or content to this folder.</p>
+            </li>
+            <img src="images/step-7.png" alt="Adding content." />
+        </ol>
+        <h2>Conclusion</h2>
+        <p>
+            We now have a functional ASP.NET MVC application with our root-level folders named after the high-level use cases of our application.  
+            From here, we can continue to add other use cases as necessary without the framework-driven folder organization that ASP.NET MVC imposes on us.
+        </p>
+        <p>
+            Please note that there are some tradeoffs to this solution.  
+            The most obvious disadvantage is we can no longer use the automatic scaffolding features that are integrated with Visual Studio when we create our controllers and views.  
+            Instead, we have to create them by hand like we would any other class file or view file.  
+            In addition, if we need to serve static content from our website, since we set our routes.RouteExistingFile = true in our RouteConfig.cs file, we may have to create a controller that can serve this static content on request.
+        </p>
+        <p>If you have any questions, comments, or feedback, please <a href="mailto:matthew@matthewrenze.com">let me know</a>.</p>
+        <p>Share this article:
+            <a class="button" href="https://facebook.com/sharer.php?u=http://www.matthewrenze.com/clean-architecture-in-asp-net-mvc-5" target="_blank"><img src="/images/facebook.png" alt="Share on Facebook" /></a> 
+            <a class="button" href="https://twitter.com/intent/tweet?url=http://www.matthewrenze.com/clean-architecture-in-asp-net-mvc-5&text=Clean%20Architecture%20in%20ASP%2eNET%20MVC%205&via=MatthewRenze" target="_blank"><img src="/images/twitter.png" alt="Share on Twitter" /></a>
+            <a class="button" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.matthewrenze.com/clean-architecture-in-asp-net-mvc-5&title=Clean%20Architecture%20in%20ASP%2eNET%20MVC%205" target="_blank"><img src="/images/linked-in.png" alt="Share on LinkedIn" /></a>
+            <a class="button" href="https://plus.google.com/share?url=http://www.matthewrenze.com/clean-architecture-in-asp-net-mvc-5" target="_blank"><img src="/images/googleplus.png" alt="Share on Google+" /></a> 
+        </p>
+    </article>
+    <footer>
+        <p>&copy; 2015 Matthew Renze</p>
+    </footer>
+</body>
+</html>
