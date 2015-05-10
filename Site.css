@@ -63,6 +63,11 @@ a.button{
     display: block;
 }
 
+.lanyrd{
+    background: url(images/lanyrd.png) no-repeat;
+    display: block;
+}
+
 strong, b
 {
     font-weight: bold;    
