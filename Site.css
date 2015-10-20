@@ -53,18 +53,23 @@ a.button{
     display:block;
 }
 
+.lanyrd{
+    background: url(images/lanyrd.png) no-repeat;
+    display: block;
+}
+
 .linked-in{
     background:url(images/linked-in.png) no-repeat;
     display:block;
 }
 
-.twitter{
-    background: url(images/twitter.png) no-repeat;
+.stack-overflow{
+    background: url(images/stack-overflow.png) no-repeat;
     display: block;
 }
 
-.lanyrd{
-    background: url(images/lanyrd.png) no-repeat;
+.twitter{
+    background: url(images/twitter.png) no-repeat;
     display: block;
 }
 
