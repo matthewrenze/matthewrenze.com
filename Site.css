@@ -63,6 +63,11 @@ a.button{
     display:block;
 }
 
+.pluralsight{
+    background:url(images/pluralsight.png) no-repeat;
+    display:block;
+}
+
 .stack-overflow{
     background: url(images/stack-overflow.png) no-repeat;
     display: block;
