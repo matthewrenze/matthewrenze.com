@@ -78,6 +78,11 @@ a.button{
     display: block;
 }
 
+.youtube{
+    background: url(images/youtube.png) no-repeat;
+    display: block;
+}
+
 strong, b
 {
     font-weight: bold;    
