@@ -215,7 +215,24 @@ article img
     max-width: 740px;
 }
 
-article img.thumbnail
+article img.float-right
+{
+    display: inline;
+    float: right;    
+    border: none;
+    max-width: 740px;
+}
+
+article.articles img.thumbnail
+{
+    display: inline;
+    float: right;
+    height: 96px;
+    margin: 4px;
+    border: none;    
+}
+
+article.software img.thumbnail
 {
     display: inline;
     float: right;
@@ -224,7 +241,16 @@ article img.thumbnail
     border: none;    
 }
 
-article section 
+article.articles section 
+{
+    min-height: 100px;
+    padding-top: 8px;
+    border-top: solid;
+    border-top-width: 1px;
+    border-top-color: #DBDBDB;    
+}
+
+article.software section 
 {
     min-height: 132px;
     padding-top: 8px;
