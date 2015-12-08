@@ -250,6 +250,15 @@ article.articles section
     border-top-color: #DBDBDB;    
 }
 
+article.presentation section 
+{
+    min-height: 100px;
+    padding-top: 8px;
+    border-top: solid;
+    border-top-width: 1px;
+    border-top-color: #DBDBDB;    
+}
+
 article.software section 
 {
     min-height: 132px;
