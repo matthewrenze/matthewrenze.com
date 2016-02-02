@@ -223,7 +223,7 @@ article img.float-right
     max-width: 740px;
 }
 
-article.articles img.thumbnail,
+article.articles img.thumbnail
 {
     display: inline;
     float: right;
