@@ -223,7 +223,7 @@ article img.float-right
     max-width: 740px;
 }
 
-article.articles img.thumbnail
+article.articles img.thumbnail,
 {
     display: inline;
     float: right;
@@ -232,7 +232,8 @@ article.articles img.thumbnail
     border: none;    
 }
 
-article.software img.thumbnail
+article.software img.thumbnail,
+article.presentations img.thumbnail
 {
     display: inline;
     float: right;
@@ -250,7 +251,7 @@ article.articles section
     border-top-color: #DBDBDB;    
 }
 
-article.presentation section 
+article.presentations section 
 {
     min-height: 100px;
     padding-top: 8px;
