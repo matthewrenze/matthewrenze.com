@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Data Table Builder - Matthew Renze</title>
+    <meta name="description" content="How to implement a Data Table Builder to create .NET data tables for your unit tests." />
+    <meta name="keywords" content="matthew renze, data table, builder, pattern, C#, .NET"/>
+    <meta name="author" content="Matthew Renze" />
+    <meta property="og:title" content="Data Table Builder" />
+    <meta property="og:image" content="http://www.matthewrenze.com/articles/data-table-builder/thumbnail.png"/>
+    <meta property="og:url" content="http://www.matthewrenze.com/articles/data-table-builder" />
+    <meta property="og:site_name" content="Matthew Renze"/>
+    <meta property="og:type" content="article"/>
+    <link href="../../site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-34791648-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+ </head>
+<body>
+    <header>
+        <h1>Matthew Renze</h1>
+        <nav>
+            <ul>
+                <li><a href="/home.html">Home</a></li>
+                <li><a href="/articles.html">Articles</a></li>
+                <li><a href="/courses.html">Courses</a></li>
+                <li><a href="/presentations.html">Presentations</a></li>
+                <li><a href="/software.html">Software</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <article class="article">
+        <header>
+            <h1>Data Table Builder</h1>
+        </header>
+        <p>
+            Author: <a href="/about.html">Matthew Renze</a><br />
+            Posted: 2016-02-03
+        </p>
+        <a href="/articles/data-table-builder/image.png"><img width="256" style="margin-left: 15px" class="float-right" src="/articles/data-table-builder/image-256.png" alt="What is R?" /></a>
+        <p>
+            I've spent many hours during my career writing unit tests for classes that use data tables in .NET applications. 
+            In the past, I always felt that there was too much overhead in setting up a data table just so I could use it to verify my test case.
+        </p>
+        <p>
+            However, one day, I was writing one of these unit tests that involved significant setup code to construct a data table with about 20 columns and a single row. 
+            While doing so, it occurred to me that there might be a better way. 
+            So, after I finished the test case, I went back and tried to refactor the code to a more elegant solution.
+    
+        </p>
+        <p>
+            I ended up applying the <a href="https://en.wikipedia.org/wiki/builder_pattern" target="blank">Builder</a> design pattern to the construction of the test data table. 
+            In doing so, I dramatically simplified the setup code for the data table. 
+            This idea worked so well, in fact, that I went back and replaced all of the previous data table set-up code, with the new pattern, in about 40 other unit tests. 
+            Ever since that day, I have been using this new pattern when I need to create data tables in my unit test code.
+        </p>
+        <p>
+            As an example, here is the code that I would have written in the past to construct a data table for a single unit test:
+        </p>
+        <div style="border: #000080 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+            <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                <span style="color:#0000ff">var</span> table = <span style="color:#0000ff">new</span> <span style="color:#2b91af">DataTable</span>();<br>
+                <br>
+                table.Columns.Add(<span style="color:#a31515">&quot;ID&quot;</span>, <span style="color:#0000ff">typeof</span>(<span style="color:#0000ff">int</span>));<br>
+                table.Columns.Add(<span style="color:#a31515">&quot;Name&quot;</span>, <span style="color:#0000ff">typeof</span>(<span style="color:#0000ff">string</span>));<br>
+                table.Columns.Add(<span style="color:#a31515">&quot;DOB&quot;</span>, <span style="color:#0000ff">typeof</span>(<span style="color:#2b91af">DateTime</span>));<br>
+                table.Columns.Add(<span style="color:#a31515">&quot;Amount&quot;</span>, <span style="color:#0000ff">typeof</span>(<span style="color:#0000ff">double</span>));<br>
+                table.Columns.Add(<span style="color:#a31515">&quot;Flag&quot;</span>, <span style="color:#0000ff">typeof</span>(<span style="color:#0000ff">bool</span>));<br>
+                <br>
+                <span style="color:#0000ff">var</span> row = table.NewRow();<br>
+                <br>
+                row.SetField(<span style="color:#a31515">&quot;ID&quot;</span>, 1);<br>
+                row.SetField(<span style="color:#a31515">&quot;Name&quot;</span>, <span style="color:#a31515">&quot;Matthew&quot;</span>);<br>
+                row.SetField(<span style="color:#a31515">&quot;DOB&quot;</span>, <span style="color:#0000ff">new</span> <span style="color:#2b91af">DateTime</span>(1978, 8, 2));<br>
+                row.SetField(<span style="color:#a31515">&quot;Amount&quot;</span>, 1.23d);<br>
+                row.SetField(<span style="color:#a31515">&quot;Flag&quot;</span>, <span style="color:#0000ff">true</span>);<br>
+                <br>
+                table.Rows.Add(row);
+            </div>
+        </div>
+        <p>
+            And here is the same code using the data table builder:
+        </p>
+        <div style="border: #000080 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+            <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                <span style="color:#0000ff">var</span> table = <span style="color:#0000ff">new</span> <span style="color:#2b91af">DataTableBuilder</span>()<br>
+                &#160;&#160;&#160;&#160;.WithColumn(<span style="color:#a31515">&quot;ID&quot;</span>, 1)<br>
+                &#160;&#160;&#160;&#160;.WithColumn(<span style="color:#a31515">&quot;Name&quot;</span>, <span style="color:#a31515">&quot;Matthew&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn(<span style="color:#a31515">&quot;DOB&quot;</span>, <span style="color:#0000ff">new</span> <span style="color:#2b91af">DateTime</span>(1978, 8, 2))<br>
+                &#160;&#160;&#160;&#160;.WithColumn(<span style="color:#a31515">&quot;Amount&quot;</span>, 1.23d)<br>
+                &#160;&#160;&#160;&#160;.WithColumn(<span style="color:#a31515">&quot;Flag&quot;</span>, <span style="color:#0000ff">true</span>)<br>
+                &#160;&#160;&#160;&#160;.Build();
+            </div>
+        </div>
+        <p>
+            In addition, if I need to create a data table without any rows, I can easily do that as well:
+        </p>
+        <div style="border: #000080 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+            <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                <span style="color:#0000ff">var</span> table = <span style="color:#0000ff">new</span> <span style="color:#2b91af">DataTableBuilder</span>()<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">int</span>&gt;(<span style="color:#a31515">&quot;ID&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">string</span>&gt;(<span style="color:#a31515">&quot;Name&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#2b91af">DateTime</span>&gt;(<span style="color:#a31515">&quot;DOB&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">double</span>&gt;(<span style="color:#a31515">&quot;Amount&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">bool</span>&gt;(<span style="color:#a31515">&quot;Flag&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.Build();
+            </div>
+        </div>
+        <p>
+            Plus, if I need to write a test case that involves multiple rows in the data table, which I rarely ever do, this is relatively easy to do as well.
+        </p>
+        <div style="border: #000080 1px solid; color: #000; font-family: Consolas, 'Courier New', Courier, Monospace; font-size: 10pt">
+            <div style="background-color: #ffffff; color: #000000; overflow: auto; padding: 2px 5px; white-space: nowrap">
+                <span style="color:#0000ff">var</span> table = <span style="color:#0000ff">new</span> <span style="color:#2b91af">DataTableBuilder</span>()<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">int</span>&gt;(<span style="color:#a31515">&quot;ID&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">string</span>&gt;(<span style="color:#a31515">&quot;Name&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#2b91af">DateTime</span>&gt;(<span style="color:#a31515">&quot;DOB&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">double</span>&gt;(<span style="color:#a31515">&quot;Amount&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithColumn&lt;<span style="color:#0000ff">bool</span>&gt;(<span style="color:#a31515">&quot;Flag&quot;</span>)<br>
+                &#160;&#160;&#160;&#160;.WithRow(1, <span style="color:#a31515">&quot;Matthew&quot;</span>, <span style="color:#0000ff">new</span> <span style="color:#2b91af">DateTime</span>(1978, 8, 2), 1.23d, <span style="color:#0000ff">true</span>)<br>
+                &#160;&#160;&#160;&#160;.WithRow(2, <span style="color:#a31515">&quot;Renze&quot;</span>, <span style="color:#0000ff">new</span> <span style="color:#2b91af">DateTime</span>(2001, 2, 3), 2.34d, <span style="color:#0000ff">false</span>)<br>
+                &#160;&#160;&#160;&#160;.Build();
+            </div>
+        </div>
+        <p>
+            As you can see, the data table builder reduces the number of lines of code by about half in the one-row test case. 
+            In addition, the new pattern is significantly easier to read. 
+            Plus, it makes the code much easier to reason about.
+        </p>
+        <p>
+            If you'd like to give this pattern a try in your own applications, I've published all of the source code in GitHub at the following repository URL: <a href="https://github.com/matthewrenze/data-table-builder" target="blank">https://github.com/matthewrenze/data-table-builder</a>
+        </p>
+        <p>
+            If you have any questions, comments, or feedback, please <a href="mailto:matthew@matthewrenze.com">let me know</a>.
+        </p>
+        <p>
+            In addition, if you like the way this pattern simplifies your unit test code, be sure to share the idea with your peers as well.
+        </p>           
+        <p>
+            Share this article:&nbsp;
+            <a class="button" href="https://facebook.com/sharer.php?u=http://www.matthewrenze.com/articles/data-table-builder" target="_blank"><img src="/images/facebook.png" alt="Share on Facebook" /></a>
+            <a class="button" href="https://twitter.com/intent/tweet?url=http://www.matthewrenze.com/articles/data-table-builder&text=Data%20Table%20Builder&via=MatthewRenze" target="_blank"><img src="/images/twitter.png" alt="Share on Twitter" /></a>
+            <a class="button" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.matthewrenze.com/articles/data-table-builder&title=Data%20Table%20Builder" target="_blank"><img src="/images/linked-in.png" alt="Share on LinkedIn" /></a>
+            <a class="button" href="https://plus.google.com/share?url=http://www.matthewrenze.com/articles/data-table-builder" target="_blank"><img src="/images/googleplus.png" alt="Share on Google+" /></a>
+        </p>
+    </article>
+    <footer>
+        <p>&copy; 2015 Matthew Renze</p>
+    </footer>
+</body>
+</html>
