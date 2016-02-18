@@ -156,14 +156,15 @@ article
     padding-bottom: 16px;      
 }
 
-article.news 
+article.news,
+article.article 
 {
     width: 530px;
 }
 
-article.article 
+article.news section
 {
-    width: 530px;
+    height: 112px;
 }
 
 article header
@@ -223,6 +224,7 @@ article img.float-right
     max-width: 740px;
 }
 
+article.news img.thumbnail,
 article.articles img.thumbnail
 {
     display: inline;
