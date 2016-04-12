@@ -1,0 +1,11 @@
+Future Article Notes:
+
+1. Download and install R 
+
+2. Download and install RStudio or RTVS
+
+3. Watch online tutorials
+
+4. Read articles and blogs for additional info
+
+5. Use R on a daily basis
