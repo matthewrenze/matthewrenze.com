@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Hello HoloWorld - Matthew Renze</title>
+    <meta name="description" content="First impressions developing holographic applications for the Microsoft HoloLens." />
+    <meta name="keywords" content="matthew renze, microsoft, hololens, holograpic, c#, unity3d"/>
+    <meta name="author" content="Matthew Renze" />
+    <meta property="og:title" content="Hello HoloWorld" />
+    <meta property="og:image" content="http://www.matthewrenze.com/articles/hello-holoworld/small.jpg"/>
+    <meta property="og:url" content="http://www.matthewrenze.com/articles/hello-holoworld" />
+    <meta property="og:site_name" content="Matthew Renze"/>
+    <meta property="og:type" content="article"/>
+    <link href="../../site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-34791648-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+ </head>
+<body>
+    <header>
+        <h1>Matthew Renze</h1>
+        <nav>
+            <ul>
+                <li><a href="/home.html">Home</a></li>
+                <li><a href="/articles.html">Articles</a></li>
+                <li><a href="/courses.html">Courses</a></li>
+                <li><a href="/presentations.html">Presentations</a></li>
+                <li><a href="/software.html">Software</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <article class="article">
+        <header>
+            <h1>Hello HoloWorld</h1>            
+        </header>
+        <p>
+            First impressions developing holographic applications for the <a href="https://www.microsoft.com/microsoft-hololens/en-us/developers" target="blank">Microsoft HoloLens</a><br/>
+            <br/>
+            Author: <a href="/about.html">Matthew Renze</a><br/>
+            Posted: 2016-05-01
+        </p>
+        <a href="/articles/hello-holoworld/image.jpg">
+            <img width="256" style="margin-left: 15px" class="float-right" src="/articles/hello-holoworld/small.jpg" alt="Microsoft HoloLens"/>
+        </a>
+        <p>
+            I received my <a href="https://www.microsoft.com/microsoft-hololens/en-us/developers" target="blank">Microsoft HoloLens Dev Kit</a> a couple weeks ago.
+            Since then I've been exploring the device, the apps, and development tools. 
+            Since the HoloLens is such a new and potentially revolutionary technology, I thought it might be valuable to compile my initial impressions from my first couple weeks of developing software for the HoloLens.
+        </p>
+        <h2>
+            The HoloLens Device
+        </h2>
+        <p>
+            At first glance, the device itself doesn't look and feel like a developer prototype at all. 
+            It feels more like a finished product in terms of its construction and aesthetics. In fact, even the box and packaging seem more like a finished product than a dev kit (at least compared to my <a href="https://www.oculus.com/en-us/dk2/" target="blank">Oculus Rift DK2</a>).
+        </p>
+        <p>
+            The visual display projects images in front of your eyes in a way that makes things appear as if they are really in front of you. 
+            It's hard to explain unless you've actually used one, but the effect is very convincing. 
+            In fact, after a few minutes of use, your brain seems to forget that this is all just an illusion.
+        </p>
+        <p>
+            The down side is that the augmented-reality view port is limited to a medium-sized rectangle in the center of your total field of vision. 
+            This, in my opinion, is the biggest downside to the first iteration of the HoloLens hardware. 
+            However, if this limitation can be overcome before the commercial version, Microsoft will have a truly immersive and game-changing technology on its hands.
+        </p>
+        <p>
+            The HoloLens is a bit heavy, so I don't expect you could wear it for too long without a bit of neck tension. 
+            However, I assume that the weight will be reduced with future iterations of the design as well. 
+            Adjusting the head band so that it puts more of the weight towards the top of your head, rather than on your forehead, seems to help reduce the stress on my neck though.
+        </p>
+        <p>
+            The battery life appears to be about 2-3 hours of continuous use. 
+            While this might not seem like much, I still haven't run out of power while using it in my first two weeks. I've typically interacted with the device for 30 minutes or so at a time. 
+            Usually just enough time to try a new application or deploy and test an application that I've created. In addition, the device can be used while plugged in, so if you are developing at your desk, you can just keep it plugged in while developing.
+        </p>
+        <h2>
+            Operating System
+        </h2>
+        <p>
+            The HoloLens runs Windows 10.
+            The operating system and the user interface work very well with the device. You use the bloom gesture to launch the Start Menu. 
+            You gaze at icons and air-tap or say the word "select" to navigate. In addition, there are other gestures like pinch-and-drag for scrolling, zooming, etc. and voice commands as well.
+        </p>
+        <p>
+            Unfortunately, text entry is a bit slow and awkward. 
+            There's an on-screen keyboard that pops up that allows you to air-tap to press each key. 
+            However, it's far less efficient than using a physical keyboard, especially for entering passwords. 
+            Ultimately, it's no worse than entering text on a video-game console or interactive television though.
+        </p>
+        <p>
+            All in all, interacting with the HoloLens device via Windows 10 is pretty effortless. 
+            What's even more impressive is that it works this well already, given that it's only in the developer-prototype stage at this time.
+        </p>
+        <h2>
+            Holographic Apps
+        </h2>
+        <p>
+            The HoloLens comes with a few pre-installed apps and there are a few more available on the Windows Store right now. 
+            I started by creating simple holograms using the pre-installed Holograms application. 
+            You can drag and place holograms around your room. For example, there's a tiny ballerina hologram that plays music and dances when you air-tap on her. She seems surprisingly real when she starts dancing to the music.
+        </p>
+        <p>
+            Next, I downloaded, installed, and played <a href="https://www.microsoft.com/microsoft-hololens/en-us/apps/RoboRaid" target="blank">RoboRaid</a>. 
+            This game has been the "aha" moment for everyone that I've showed the HoloLens to so far. 
+            It's the app that really sells the idea of the mixed-reality computing paradigm. 
+            It's hard to explain until you've seen it, but it really seems like there are robots busting holes in your walls and trying to attack you. 
+            I've never experienced a video game like it before. 
+            It is truly remarkable.
+        </p>
+        <p>
+            Then, I tried <a href="https://www.microsoft.com/microsoft-hololens/en-us/apps/Fragments" target="blank">Fragments</a>, a sci-fi detective game that challenges you to solve crimes by walking through the holographic memories of the victims of the crime.
+            This game transformed my living room into an abandoned warehouse filled with rats, a missing child, and a gun-wielding abductor. 
+            There are moments where you honestly forget that you're in your own home and you feel like you're actually re-living someone else's memories. The effect is very convincing.
+        </p>
+        <p>
+            Finally, I tried <a href="https://www.microsoft.com/microsoft-hololens/en-us/apps/young-conker" target="blank">Young Conker</a>, a video game involving a toy-sized squirrel, who runs around your house trying to solve puzzles.
+            It's a very weird experience being an adult and walking around your living room, guiding a tiny imaginary squirrel to solve a puzzle on your couch. 
+            Even more unusual is seeing this little squirrel jump on to and off of your couch as if they are really co-present.
+        </p>
+        <p>
+            I tried several other apps including HoloStudio, Edge, and Skype; however, the four applications I mentioned above were the ones that really sold the vision of the technology for first-time users.
+        </p>
+        <h2>
+            HoloLens Development
+        </h2>
+        <p>
+            To begin developing for the HoloLens, I started by watching the <a href="https://developer.microsoft.com/en-us/windows/holographic/getting_started">online videos</a> and reading the <a href="https://developer.microsoft.com/en-us/windows/holographic/documentation">online documentation</a> to get a general feel for everything.
+            Next, I installed the development tools (i.e. VS 2015 Update 2, HoloLens Emulator, and <a href="http://unity3d.com/pages/windows/hololens">Unity HoloLens Tech Preview</a>). 
+            Then, I attempted to get the open-source code for <a href="https://developer.microsoft.com/en-us/windows/holographic/galaxy_explorer">Galaxy Explorer</a> to compile and run on my HoloLens.
+        </p>
+        <p>
+            The process wasn't effortless, but within an hour, I was able to take the Galaxy Explorer code from GitHub, load it into <a href="https://unity3d.com/">Unity 3D</a>, build a Windows 10 Store deployment project from Unity, and then deploy the solution to both the HoloLens emulator and my HoloLens device. 
+            All-in-all, once you know what you're doing, the process is actually pretty simple.
+        </p>
+        <p>
+            After I finished exploring the Milky Way galaxy in my living room, I decided to watch the tutorial videos at the <a href="https://developer.microsoft.com/en-us/windows/holographic/academy">Microsoft Holographic Academy</a> to learn how to build a holographic app myself. 
+            The tutorials walk you through all of the basics of building a holographic app, including gaze, gestures, voice commands, spatial sound, and spatial mapping.
+        </p>
+        <p>
+            I've used the Unity 3D engine to develop software in the past, so everything was very familiar to me.
+            In fact, I had almost no issues what-so-ever walking through each of the tutorials. 
+            I did not copy-and-paste the sample code, as the tutorial suggested. 
+            Instead, I typed everything out by hand, like I usually do with tutorials, so that I would understand what each line of code was doing. Within a couple hours, I went from starting with a new project, to interacting with a small holographic world on my kitchen countertop.
+        </p>
+        <h2>
+            Final Thoughts
+        </h2>
+        <p>
+            There are definitely a few things that could be improved for the development experience.
+            The most significant is the length of the feedback loop for debugging. 
+            Essentially, you have to build the Unity project as a Window 10 Store project, then open the build output project in Visual Studio, and finally deploy to the HoloLens (or emulator) to test your code changes.
+        </p>
+        <p>
+            This process can take several minutes to test a single one-line code change.
+            To be optimal, this cycle needs to be significantly reduced. 
+            In the future, I assume there will be a way to simulate the HoloLens gaze, gestures, and voice input directly within Unity so that you can get immediate feedback without having to deploy to the device or emulator (if this feature does not already exist).
+        </p>
+        <p>
+            In addition, Unity 3D isn't the land of best practices when it comes to writing C# code.
+            The code that Unity framework encourages you to write isn't easily unit testable without significant mocking. 
+            It will also encourage you to violate the Law of Demeter, use the service-locator antipattern, tightly couple via inheritance hierarchies, and make extensive use of out-parameters, etc. So, you have to work quite a bit harder to write good clean code in Unity.
+        </p>
+        <p>
+            In the end, I was very surprised how easy it was to build my first application for the Microsoft HoloLens.
+            Having previous experience with Unity 3D was probably my best asset during the learning process. 
+            In fact, for anyone interested in learning how to develop apps for the HoloLens, I would highly recommend becoming familiar with developing regular 3D apps for Unity first before developing for the HoloLens.
+        </p>
+        <p>
+            Finally, I need to thank <a href="https://www.microsoft.com">Microsoft</a> for inviting me to be part of wave 1 of the HoloLens Developer Program.
+            I'm very excited to be one of the first people on the planet to be creating holographic applications for the Microsoft HoloLens.
+            In addition, I'm really looking forward to creating my open-source immersive data visualization tool using this technology.
+            I'll be sure to keep everyone posted on my experiences over the course of its development.
+        </p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/U6e_z-Qz5hY" frameborder="0" allowfullscreen></iframe>
+        <p>
+            Share this article:&nbsp;
+            <a class="button" href="https://facebook.com/sharer.php?u=http://www.matthewrenze.com/articles/hello-holoworld" target="_blank">
+                <img src="/images/facebook.png" alt="Share on Facebook"/>
+            </a>
+            <a class="button" href="https://twitter.com/intent/tweet?url=http://www.matthewrenze.com/articles/hello-holoworld&text=Hello%20HoloWorld&via=MatthewRenze" target="_blank">
+                <img src="/images/twitter.png" alt="Share on Twitter"/>
+            </a>
+            <a class="button" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.matthewrenze.com/articles/hello-holoworld&title=Hello%20HoloWorld" target="_blank">
+                <img src="/images/linked-in.png" alt="Share on LinkedIn"/>
+            </a>
+            <a class="button" href="https://plus.google.com/share?url=http://www.matthewrenze.com/articles/hello-holoworld" target="_blank">
+                <img src="/images/googleplus.png" alt="Share on Google+"/>
+            </a>
+        </p>
+    </article>
+    <footer>
+        <p>&copy; 2015 Matthew Renze</p>
+    </footer>
+</body>
+</html>
