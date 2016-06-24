@@ -157,7 +157,7 @@ $(document).ready(function () {
 ## [5] &quot;Tomato.Meter&quot; &quot;Box.Office&quot;</code></pre>
 </div>
 <div id="problem-1-column-name-is-incorrect" class="section level3">
-<h3>Problem 1: Column Name is incorrect</h3>
+<h3>Problem 1: Column name is incorrect</h3>
 <ol start="9" style="list-style-type: decimal">
 <li>Inspect the incorrect column name (i.e. Tomato.Meter).</li>
 </ol>
@@ -299,6 +299,69 @@ $(document).ready(function () {
 <li><p>Verify the new CSV file exists in your C:/Workshop directory.</p></li>
 <li><p>Verify the file’s contents by opening the file.</p></li>
 </ol>
+</div>
+<div id="bonus-problem-replace-joes-analysis-software" class="section level3">
+<h3>Bonus Problem: Replace Joe’s Analysis Software</h3>
+<ol start="32" style="list-style-type: decimal">
+<li>Load the dplyr package</li>
+</ol>
+<pre class="r"><code>library(dplyr)</code></pre>
+<ol start="33" style="list-style-type: decimal">
+<li>Select columns</li>
+</ol>
+<pre class="r"><code>temp &lt;- select(movies, Year, Rating, Box.Office)</code></pre>
+<ol start="34" style="list-style-type: decimal">
+<li>Filter rows</li>
+</ol>
+<pre class="r"><code>temp &lt;- filter(temp, Year == 2014)</code></pre>
+<ol start="35" style="list-style-type: decimal">
+<li>Create new revenue column ($B)</li>
+</ol>
+<pre class="r"><code>temp &lt;- mutate(temp, Revenue = Box.Office / 1000)</code></pre>
+<ol start="36" style="list-style-type: decimal">
+<li>Group by rating</li>
+</ol>
+<pre class="r"><code>temp &lt;- group_by(temp, Rating)</code></pre>
+<ol start="37" style="list-style-type: decimal">
+<li>Summarize by rating category</li>
+</ol>
+<pre class="r"><code>temp &lt;- summarize(temp, Total.Revenue = sum(Revenue))</code></pre>
+<ol start="38" style="list-style-type: decimal">
+<li>Sort rows by revenue (descending)</li>
+</ol>
+<pre class="r"><code>temp &lt;- arrange(temp, desc(Total.Revenue))</code></pre>
+<ol start="39" style="list-style-type: decimal">
+<li>Display results</li>
+</ol>
+<pre class="r"><code>print(temp)</code></pre>
+<pre><code>## Source: local data frame [4 x 2]
+## 
+##   Rating Total.Revenue
+##   (fctr)         (dbl)
+## 1  PG-13      4.207022
+## 2      R      1.985307
+## 3     PG      1.931452
+## 4      G      0.159132</code></pre>
+<ol start="40" style="list-style-type: decimal">
+<li>Chain dplyr methods</li>
+</ol>
+<pre class="r"><code>report &lt;- movies %&gt;%
+    select(Year, Rating, Box.Office) %&gt;%
+    filter(Year == 2014) %&gt;%
+    mutate(Revenue = Box.Office / 1000) %&gt;%
+    group_by(Rating) %&gt;%
+    summarize(Total.Revenue = sum(Revenue)) %&gt;%
+    arrange(desc(Total.Revenue)) %&gt;%
+    as.data.frame()</code></pre>
+<ol start="41" style="list-style-type: decimal">
+<li>Display results</li>
+</ol>
+<pre class="r"><code>print (report)</code></pre>
+<pre><code>##   Rating Total.Revenue
+## 1  PG-13      4.207022
+## 2      R      1.985307
+## 3     PG      1.931452
+## 4      G      0.159132</code></pre>
 </div>
 </div>
 
