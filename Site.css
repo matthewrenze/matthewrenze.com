@@ -229,7 +229,7 @@ article.articles img.thumbnail
 {
     display: inline;
     float: right;
-    height: 96px;
+    width: 96px;
     margin: 4px;
     border: none;    
 }
