@@ -63,6 +63,11 @@ a.button{
     display:block;
 }
 
+.microsoft-mvp{
+    background:url(images/microsoft-mvp.png) no-repeat;
+    display:block;
+}
+
 .pluralsight{
     background:url(images/pluralsight.png) no-repeat;
     display:block;
