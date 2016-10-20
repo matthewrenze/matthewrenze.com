@@ -275,7 +275,18 @@ skewness(movies$Runtime)</code></pre>
 ##   21.978918   37.172776   40.328661   86.874763   27.739240   38.523364 
 ##         War     Western 
 ##   26.474298   36.146105</code></pre>
+</div>
+<div id="analyzing-many-variables" class="section level3">
+<h3>Analyzing Many Variables</h3>
 <ol start="15" style="list-style-type: decimal">
+<li>Create a correlation matrix</li>
+</ol>
+<pre class="r"><code>cor(movies[, 4:6])</code></pre>
+<pre><code>##                Runtime Critic.Score Box.Office
+## Runtime      1.0000000    0.1881713  0.3477480
+## Critic.Score 0.1881713    1.0000000  0.1608324
+## Box.Office   0.3477480    0.1608324  1.0000000</code></pre>
+<ol start="16" style="list-style-type: decimal">
 <li>Summarize an entire table.</li>
 </ol>
 <pre class="r"><code>summary(movies)</code></pre>
@@ -295,14 +306,6 @@ skewness(movies$Runtime)</code></pre>
 ##  3rd Qu.: 74.00   3rd Qu.: 51.4750  
 ##  Max.   :100.00   Max.   :760.5000  
 ## </code></pre>
-<ol start="16" style="list-style-type: decimal">
-<li>Create a correlation matrix</li>
-</ol>
-<pre class="r"><code>cor(movies[, 4:6])</code></pre>
-<pre><code>##                Runtime Critic.Score Box.Office
-## Runtime      1.0000000    0.1881713  0.3477480
-## Critic.Score 0.1881713    1.0000000  0.1608324
-## Box.Office   0.3477480    0.1608324  1.0000000</code></pre>
 </div>
 </div>
 

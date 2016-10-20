@@ -122,7 +122,8 @@ $(document).ready(function () {
 <h1>Lab 9: Transform and Clean Mortality Statistics</h1>
 <ol style="list-style-type: decimal">
 <li><p>Set the working directory</p></li>
-<li><p>Read the tab-delimited mortality statistics file into a data set called “rates”</p></li>
+<li><p>Read the tab-delimited mortality statistics file into a data set called “rates”<br />
+<em>(NOTE: Mortality Statistics.txt)</em></p></li>
 <li><p>Inspect the data</p></li>
 </ol>
 <pre><code>##     State State.Code Gender Gender.Code Five.Year.Age.Groups
@@ -247,8 +248,8 @@ $(document).ready(function () {
 <em>from [mortality]</em><br />
 <em>where State = “Iowa”</em><br />
 <em>and Gender = “Male”</em><br />
-<em>and Age.Group.Low &gt;= 38</em><br />
-<em>and Age.Group.High &lt;= 38</em></p></li>
+<em>and Age.Group.Low &lt;= 38</em><br />
+<em>and Age.Group.High &gt;= 38</em></p></li>
 </ol>
 <pre><code>##    AvgRate
 ## 1 0.001575</code></pre>

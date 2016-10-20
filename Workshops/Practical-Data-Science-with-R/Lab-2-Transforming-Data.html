@@ -125,11 +125,11 @@ $(document).ready(function () {
 <ol style="list-style-type: decimal">
 <li><p>Create a directory called “Workshop” on your C: drive.</p></li>
 <li><p>Download the <a href="http://www.matthewrenze.com/workshops/practical-data-science-with-r/data.zip">data files</a></p></li>
-<li><p>Extract the data files to the C:/Workshop directory.</p></li>
+<li><p>Extract the data files to the C:/Workshop/Data directory.</p></li>
 <li><p>Verify the contents of the Movies.txt file you extracted.</p></li>
 <li><p>Set your working directory.</p></li>
 </ol>
-<pre class="r"><code>setwd(&quot;C:/Workshop&quot;)</code></pre>
+<pre class="r"><code>setwd(&quot;C:/Workshop/Data&quot;)</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Load the data from the tab-delimited data file.</li>
 </ol>
@@ -334,10 +334,9 @@ $(document).ready(function () {
 <li>Display results</li>
 </ol>
 <pre class="r"><code>print(temp)</code></pre>
-<pre><code>## Source: local data frame [4 x 2]
-## 
+<pre><code>## # A tibble: 4 × 2
 ##   Rating Total.Revenue
-##   (fctr)         (dbl)
+##   &lt;fctr&gt;         &lt;dbl&gt;
 ## 1  PG-13      4.207022
 ## 2      R      1.985307
 ## 3     PG      1.931452
