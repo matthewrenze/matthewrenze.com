@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>DevSci: Agile, DevOps, and Data Science - Matthew Renze</title>
+    <meta name="description" content="An observation about how Agile, DevOps, and Data Science are converging to produce the DevSci movement." />
+    <meta name="keywords" content="matthew renze, agile, devsci, devops, data science"/>
+    <meta name="author" content="Matthew Renze" />
+    <meta property="og:title" content="DevSci" />
+    <meta property="og:image" content="http://www.matthewrenze.com/articles/devsci/small.png"/>
+    <meta property="og:url" content="http://www.matthewrenze.com/articles/devsci" />
+    <meta property="og:site_name" content="Matthew Renze"/>
+    <meta property="og:type" content="article"/>
+    <link href="../../site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-34791648-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+ </head>
+<body>
+    <header>
+        <h1>Matthew Renze</h1>
+        <nav>
+            <ul>
+                <li><a href="/home.html">Home</a></li>
+                <li><a href="/articles.html">Articles</a></li>
+                <li><a href="/courses.html">Courses</a></li>
+                <li><a href="/presentations.html">Presentations</a></li>
+                <li><a href="/software.html">Software</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <article class="article">
+        <header>
+            <h1>DevSci: Agile, DevOps, and Data Science</h1>            
+        </header>
+        <p>
+            An observation about how Agile, DevOps, and Data Science are converging to produce the DevSci movement.<br/>
+            <br/>
+            Author: <a href="/about.html">Matthew Renze</a><br/>
+            Posted: 2016-10-31
+        </p>
+        <a href="image.png">
+            <img width="256" style="margin-left: 15px" class="float-right" src="/articles/devsci/small.png" alt="DevSci Ven Diagram"/>
+        </a>
+        <h2>An Observation</h2>
+        <p>
+            In the past, it was difficult to gather reliable data about our software development process without interfering with the process itself.
+            This created three types of problems:
+        </p>
+        <p>
+            First, the process of actively gathering data adds an addition layer of friction to the software development process.
+            This additional friction impedes team productivity and often entails duplicating effort (e.g. we perform a task and then have to record data about the task that was just performed).
+        </p>
+        <p>
+            Second, the process of actively gathering data introduces human biases into the process.
+            I've seen numerous occasions where developers, aware that they were being observed, began to game the system in ways that make the data being collected appear more favorable to them.
+            In addition, I've also seen project managers skew numbers to make their teams look better to their direct reports.
+        </p>
+        <p>
+            Third, these data being collected about the software development process are often used in a punitive fashion.
+            Essentially, data are being used to reprimand individual team members or whole teams rather than to provide the teams with the information they need to continuously improve over time.
+        </p>
+        <h2>Enter DevOps</h2>
+        <p>
+            With the emergence of the DevOps movement, there has been an increasing emphasis on automating the software-delivery pipeline.
+            The primary purpose of this automation is to facilitate CI/CD/CD (Continuous Integration, Continuous Delivery, and Continuous Deployment). 
+            However, this automation produces a continuous stream of actionable data as a byproduct of this automation.
+        </p>
+        <p>
+            In data science, we refer to data generated as a byproduct of a process as <em>data exhaust</em>.
+            This data exhaust has significant secondary value beyond its primary purpose of facilitating the automated software-delivery process.
+        </p>
+        <p>
+            Essentially, as a byproduct of the application of DevOps to our Agile software development process, we now have a constant stream of reliable low-cost data about our process that we can begin to analyze.
+            These data are low-cost, because we've switched from high-cost active data collection to low-cost passive data generation. 
+            In addition, these data are more reliable because they have been generated by the process itself, which makes them less sensitive to human biases created by a manual data-collection process.
+        </p>
+        <p>As a result, we now have the reliable low-cost data necessary to begin applying the practice of data science to our software development practices. As a result, I believe we are beginning to see the emergence of a new software development practice, which for lack of an existing term of art, I call DevSci (i.e. Software Development Science).</p>
+        <h2>The Emergence of DevSci</h2>
+        <p>
+            DevSci is the application of the practice of data science to the Agile software development process, made possible by DevOps.
+            Essentially, once we have our automated DevOps pipeline in place, we can use data generated by DevOps to continuously improve our Agile software development practices.
+        </p>
+        <p>
+            Now, questions that would have been difficult to answer a decade ago, are simply a matter of querying the data exhaust from our DevOps pipeline. 
+            For example:
+        </p>
+        <ul>
+            <li>We can determine key metrics like cycle times and lead time, from data exhaust generated by both our software-based Kanban boards and our DevOps automation.</li>
+            <li>We can analyze code-quality metrics like code coverage, code duplication, cyclomatic complexity, etc. from our automated CI process.</li>
+            <li>We can perform temporal analysis on our source-code repositories to see changes in our code base over time.</li>
+            <li>We can determine feature usage by tracking telemetry data generated by the software when it's deployed into production.</li>
+            <li>We can embrace Smart Failure by running small experiments in our software via A/B testing, feature usage, etc.</li>
+        </ul>
+        <p>
+            But it goes way beyond this... I'm beginning to see data science and machine learning applied to various aspects of the software development process in very novel ways.
+            I don't think we've even begun to scratch the surface of how data science will transform software development.
+        </p>
+        <h2>The Future of DevSci</h2>
+        <p>
+            I think we've already seen this same transition occur in other industries, like manufacturing.
+            First we had our craftsmen building high-quality products in small teams and one-man shops.
+            Then we automated the manufacturing value stream via factories and assembly lines.
+            Finally, we're now applying data science to the manufacturing process and radically transforming the way products are being made. 
+            I believe this is analogous to the software industry's transition from Agile, to DevOps, to DevSci.
+        </p>
+        <p>
+            Ultimately, what I'm predicting is that the next movement in software development is the application of data science to our Agile software development practices, made possible by DevOps.
+            In addition, I believe that this DevSci phenomena will fundamentally transform the way that we create software, from the inception of new features to the continuous delivery of those features.
+        </p>
+        <p>
+            Whether we call this new-fangled approach "DevSci", "Software Development Science", just an extension of Lean Software Development, or something else entirely, I'm relatively confident that there is a real phenomenon beginning to emerge in our industry.
+            Giving it a name just helps us to have a rally-point that we can gather around. 
+            In addition, it gives us a search term to help coalesce this set of practices and a community of like-minded individuals.
+        </p>
+        <p>
+            Please keep in mind, however, that Agile values individuals and interactions over processes and tools.
+            So it is critical that we do not strip away the human element from the practice of software development in our attempts to quantify, analyze, and improve our software development practices.
+            These data science practices must be created to enable<em> teams</em> to continuously improve themselves; not for management to continuously monitor and punish the Orwellian cogs in their system.
+        </p>
+        <p>
+            DevSci needs to be about humans using data science to create better software... not about software using data science to constrain humans.
+        </p>
+        <p>
+            Share this article:&nbsp;
+            <a class="button" href="https://facebook.com/sharer.php?u=http://www.matthewrenze.com/articles/devsci" target="_blank">
+                <img src="/images/facebook.png" alt="Share on Facebook"/>
+            </a>
+            <a class="button" href="https://twitter.com/intent/tweet?url=http://www.matthewrenze.com/articles/devsci&text=DevSci%3A%20Agile%2C%20DevOps%2C%20and%20Data%20Science&via=MatthewRenze" target="_blank">
+                <img src="/images/twitter.png" alt="Share on Twitter"/>
+            </a>
+            <a class="button" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.matthewrenze.com/articles/devsci&title=DevSci%3A%20Agile%2C%20DevOps%2C%20and%20Data%20Science" target="_blank">
+                <img src="/images/linked-in.png" alt="Share on LinkedIn"/>
+            </a>
+            <a class="button" href="https://plus.google.com/share?url=http://www.matthewrenze.com/articles/devsci" target="_blank">
+                <img src="/images/googleplus.png" alt="Share on Google+"/>
+            </a>
+        </p>
+    </article>
+    <footer>
+        <p>&copy; 2016 Matthew Renze</p>
+    </footer>
+</body>
+</html>
