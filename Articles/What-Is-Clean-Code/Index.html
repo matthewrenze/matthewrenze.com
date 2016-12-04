@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>What Is Clean Code? - Matthew Renze</title>
+    <meta name="description" content="Thoughts on what clean code is, why it's important, and how to learn to write clean code. " />
+    <meta name="keywords" content="matthew renze, clean code, uncle bob, robert c. martin"/>
+    <meta name="author" content="Matthew Renze" />
+    <meta property="og:title" content="What Is Clean Code?" />
+    <meta property="og:image" content="http://www.matthewrenze.com/articles/what-is-clean-code/small.png"/>
+    <meta property="og:url" content="http://www.matthewrenze.com/articles/what-is-clean-code" />
+    <meta property="og:site_name" content="Matthew Renze"/>
+    <meta property="og:type" content="article"/>
+    <link href="../../site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-34791648-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+ </head>
+<body>
+    <header>
+        <h1>Matthew Renze</h1>
+        <nav>
+            <ul>
+                <li><a href="/home.html">Home</a></li>
+                <li><a href="/articles.html">Articles</a></li>
+                <li><a href="/courses.html">Courses</a></li>
+                <li><a href="/presentations.html">Presentations</a></li>
+                <li><a href="/software.html">Software</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <article class="article">
+        <header>
+            <h1>What Is Clean Code?</h1>            
+        </header>
+        <p>
+            Thoughts on what clean code is, why it's important, and how to learn to write clean code.<br/>
+            <br/>
+            Author: <a href="/about.html">Matthew Renze</a><br/>
+            Posted: 2016-12-04
+        </p>
+        <a href="image.png">
+            <img width="256" style="margin-left: 15px" class="float-right" src="/articles/what-is-clean-code/small.png" alt="What Is Clean Code?"/>
+        </a>        
+        <p>
+            In the book <a href="http://amzn.to/2b2fy5X" target="_blank">Clean Code</a>, Robert C. Martin (aka. <a href="https://sites.google.com/site/unclebobconsultingllc/" target="_blank">Uncle Bob</a>), asks several software-industry experts to define what <em>clean code</em> means to them. 
+            He elicits the help of thought leaders such as <a href="http://www.stroustrup.com/" target="_blank">Bjarne Stroustrup</a>, <a href="http://computingthehumanexperience.com/" target="_blank">Grady Booch</a>, <a href="http://ronjeffries.com/" target="_blank">Ron Jeffries</a>, and <a href="https://pragdave.me/" target="_blank">Dave Thomas</a>. 
+            Their responses attempt to capture the subjective and elusive nature of what clean code is.
+        </p>
+        <p>
+            Their definitions cover a range of aspects and ideas including: simplicity, straight-forward logic, minimal duplication, single responsibility, and more. 
+            In addition, <a href="http://c2.com/~ward/" target="_blank">Ward Cunningham</a> provides the especially simple yet powerful definition, "<em>You know you're working with clean code when each routine you read turns out to be pretty much what you expected</em>". 
+            This one-sentence description elegantly captures the idea that clean code as code that maintains the <a href="http://wiki.c2.com/?PrincipleOfLeastAstonishment" target="_blank">Principle of Least Astonishment</a>.
+        </p>
+        <p>
+            The definitions that these industry experts provide sufficiently captures the key set of ideas behind clean code. 
+            In addition, Uncle Bob's book <a href="http://amzn.to/2b2fy5X" target="_blank">Clean Code</a> combined with <a href="http://amzn.to/2bqIl2k" target="_blank">Code Complete</a> and <a href="http://amzn.to/2bsUd3O" target="_blank">The Pragmatic Programmer</a> are probably all any developer would ever need to gain a thorough understanding of how to write clean code. 
+            However, having spent many years reading about, practicing, and reflecting upon my own clean-coding practices, I would also like to add <em>my</em> thoughts on clean code to this on-going discussion.
+        </p>
+        <p>
+            For me, clean code is a philosophy of reader-centric code. 
+            It is about writing code for the <em>reader</em> of the code... not for the <em>author</em>... or the <em>machine</em>.
+        </p>
+        <p>
+            By writing for the <em>reader</em>, I mean that we need to start by understanding our audience and write our code with the <em>reader </em>of the code in mind, with each line of code that we write.
+        </p>
+        <p>
+            By <em>not</em> writing for the <em>author</em>, I mean that we (as authors) need to put aside our own personal desires, preferences, and egos and write our code for the needs of the <em>reader,</em> before our own needs as a <em>writer</em>.
+        </p>
+        <p>
+            By <em>not</em> writing for the <em>machine</em>, I mean that we should optimize code for human readability first, and only optimize for the machine when the cost of performance to the <em>users</em> outweighs the cost of a clean design to the <em>readers</em> of the code.
+        </p>
+        <p>
+            More precisely, clean code is reader-centric code that is simple, readable, understandable, testable, and maintainable.
+        </p>
+        <h2>Why Should I Write Clean Code?</h2>
+        <p>
+            The primary justification for investing in clean code is largely a cost/benefit argument.
+        </p>
+        <p>
+            Based on several sources I've seen (e.g. <a href="http://amzn.to/2h2tQAX" target="_blank">Bohem</a>, <a href="http://amzn.to/2h2xPO0" target="_blank">Schach</a>, and <a href="https://pdfs.semanticscholar.org/7eee/629b22cd3db63296cac13a0c37cb0a7235f6.pdf" target="_blank">Glass</a>) developers spend roughly 30% of their time creating code and roughly 70% of their time maintaining code. 
+            So we spend significantly more time, money, and effort in the software maintenance phase than we do the in software creation phase.
+        </p>
+        <p>
+            In addition, in the book Clean Code, Uncle Bob provides anecdotal evidence that we spend roughly 10% of our time writing code and 90% of our time reading code. 
+            While I haven't been able to find empirical evidence to support this claim, it definitely matches my own intuition after 17 years of professional experience developing software.
+        </p>
+        <p>
+            As software developers, our primary objective is to maximize the return-on-investment (ROI) for the software we are creating for the business. 
+            We do this by minimizing the cost to create and maintain the software, while we maximize the benefit (i.e. the business value) that the software is providing to the users.
+        </p>
+        <p>
+            Clean code helps us increase the overall value, and reduce the overall cost, of both creating and maintaining software. 
+            It does this by focusing on creating reader-centric code that is simple, readable, understandable, testable and maintainable.
+        </p>
+        <p>
+            First, by creating code that is <em>simple</em>, we are creating only the code that is necessary to solve the problems of the business. 
+            We attempt to avoid any accidental or unnecessary complexity. This means that we are maximizing the value of the software without adding any unnecessary costs.
+        </p>
+        <p>
+            Second, by writing code that is <em>readable</em>, we are optimizing for the 90% of the time we are reading code, rather than the 10% of the time we are writing code. 
+            This is a significantly more cost-effective strategy than the alternative strategy of writing code as quickly as possible without concern for the readability of the code (which appears to be quite common in the software industry).
+        </p>
+        <p>
+            Third, by creating code that is <em>understandable</em>, we reduce the amount of time necessary to comprehend what needs to be done in order to extend, modify, or fix the software. 
+            Understandable code also reduces costs incurred by mistakes, bugs, and miscommunications caused by misunderstanding the intent of the code.
+        </p>
+        <p>
+            Fourth, by creating code that is <em>testable</em>, we encourage the automated testing of that code. 
+            Creating testable code and testing that code using practices like <a href="http://wiki.c2.com/?TestDrivenDevelopment" target="_blank">Test-Driven Development</a> is the most effective way I know to improve the quality of the code, improve the long-term velocity of a team, and reduce the number of software defects. 
+            All of these factors contribute heavily to the overall return-on-investment of the software.
+        </p>
+        <p>
+            Finally, by creating code that is <em>maintainable</em>, we are optimizing for the 70% of the time/cost of maintaining code rather than the 30% of the time/cost of creating code. 
+            Moreover, we're creating software that can much more easily evolve with the changing needs of the business. This is one of the biggest hidden values that creating clean code entails.
+        </p>
+        <p>
+            Ultimately, the economics behind investing in clean code are relatively clear and straight-forward in my opinion. 
+            In fact, the only real question, in my mind, is why clean-coding practices have not been more widely adopted yet in the software industry? 
+            The value of clean code seems fairly cut and dry to me.
+        </p>
+        <p>
+            It is my hope that the software industry will eventually evolve to a point where this set of practices will be taught to all new developers, expected of all professional developers, and supported by managers who grasp the economics behind the practices of clean code.
+        </p>
+        <h2>How Can I Learn to Write Clean Code?</h2>
+        <p>
+            There are several sources of information available on writing clean code.
+        </p>
+        <p>
+            First, three books in particular that I recommend are: <a href="http://amzn.to/2b2fy5X" target="_blank">Clean Code</a>, <a href="http://amzn.to/2bqIl2k" target="_blank">Code Complete</a>, and <a href="http://amzn.to/2bsUd3O" target="_blank">The Pragmatic Programmer</a>. 
+            Each of these books contains excellent instruction and examples on writing clean code.
+        </p>
+        <p>
+            Second, Uncle Bob has a <a href="https://cleancoders.com/" target="_blank">Clean Coder</a> video series that provides dozens of videos on clean code practices. 
+            The videos are a bit pricey, but they are still the best bang for the buck of any material on the subject that I've seen so far.
+        </p>
+        <p>
+            Third, <a href="http://www.bitnative.com/" target="_blank">Cory House</a> has a course on Pluralsight titled <a href="https://www.pluralsight.com/courses/writing-clean-code-humans" target="_blank">Clean Code: Writing Code for Humans</a> that does a great job communicating the essential ideas of clean code in a very approachable way.
+        </p>
+        <p>
+            Finally, my website offers a variety of <a href="/articles.html">articles</a>, <a href="/presentations.html#clean-architecture">presentations</a>, <a href="https://vimeo.com/157710445" target="_blank">videos</a>, and <a href="/courses.html">courses</a> on clean-code practices. 
+            Please feel to <a href="/contact.html">contact</a> me if there's anything that I can do to help you or your team improve you clean-coding practices.
+        </p>
+        <h2>Takeaway</h2>
+        <p>
+            If you've made it to the end of this article, I assume you've kept reading because you're one of the developers that understands that there is a huge problem with bad and messy code in our industry.
+        </p>
+        <p>
+            I encourage you to go one step further and learn how to write clean code yourself. 
+            Then practice writing clean code each and every day. 
+            Finally once you've developed this craft, please become an advocate and teacher of clean-coding practices to your peers.
+        </p>
+        <p>
+            The only way we will fix this problem in our industry is if we are willing to invest the time to learn these practices ourselves, promote them to our peers, and explain (or defend) their value to the business.
+        </p>
+        <div style="display: inline-flex; width: 560px">
+            <div style="width: 33%; text-align: center">
+                <a href="http://amzn.to/2b2fy5X" target="_blank">
+                    <img style="border: 1px solid gray" src="clean-code.png" alt="Clean Code" />
+                </a>
+            </div>
+            <div style="width: 33%; text-align: center">
+                <a href="http://amzn.to/2bqIl2k" target="_blank">
+                    <img style="border: 1px solid gray" src="code-complete.png" alt="Code Complete" />
+                </a>
+            </div>
+            <div style="width: 33%; text-align: center">
+                <a href="http://amzn.to/2bsUd3O" target="_blank">
+                    <img style="border: 1px solid gray" src="the-pragmatic-programmer.png" alt="The Pragmatic Programmer" />
+                </a>
+            </div>
+        </div>
+        <p>
+            Share this article:&nbsp;
+            <a class="button" href="https://facebook.com/sharer.php?u=http://www.matthewrenze.com/articles/what-is-clean-code" target="_blank">
+                <img src="/images/facebook.png" alt="Share on Facebook"/>
+            </a>
+            <a class="button" href="https://twitter.com/intent/tweet?url=http://www.matthewrenze.com/articles/what-is-clean-code&text=What%20is%20Clean%20Code%3F&via=MatthewRenze" target="_blank">
+                <img src="/images/twitter.png" alt="Share on Twitter"/>
+            </a>
+            <a class="button" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.matthewrenze.com/articles/what-is-clean-code&title=What%20is%20Clean%20Code%3F" target="_blank">
+                <img src="/images/linked-in.png" alt="Share on LinkedIn"/>
+            </a>
+            <a class="button" href="https://plus.google.com/share?url=http://www.matthewrenze.com/articles/what-is-clean-code" target="_blank">
+                <img src="/images/googleplus.png" alt="Share on Google+"/>
+            </a>
+        </p>
+    </article>
+    <footer>
+        <p>&copy; 2016 Matthew Renze</p>
+    </footer>
+</body>
+</html>
