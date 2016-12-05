@@ -153,6 +153,15 @@ nav ul li a:hover
     color: #2a2a2a
 }
 
+blockquote 
+{
+    border-left: 4px solid #3390b1;
+    color: #3390b1;
+    font-style: italic;
+    margin: 30px 0 30px 15px;
+    padding-left: 15px;
+}
+
 article
 {
     display: block;
