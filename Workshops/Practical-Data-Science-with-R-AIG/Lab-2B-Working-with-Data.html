@@ -119,66 +119,176 @@ $(document).ready(function () {
 </div>
 
 
-<div id="lab-0-hello-world" class="section level1">
-<h1>Lab 0: Hello World</h1>
-<div id="install-r" class="section level3">
-<h3>Install R</h3>
+<div id="lab-2b-working-with-data-normal" class="section level1">
+<h1>Lab 2B: Working with Data (Normal)</h1>
+<div id="import-the-data" class="section level3">
+<h3>Import the Data</h3>
 <ol style="list-style-type: decimal">
-<li><p>Navigate to the <a href="https://cran.r-project.org/bin/windows/base/">R website</a> and download the latest version of R for your specific operating system.</p></li>
-<li><p>Run the installer with the default settings to install R on your machine.</p></li>
+<li><p>Create a directory called “Workshop” on your C: drive.</p></li>
+<li><p>Download the <a href="http://www.matthewrenze.com/workshops/practical-data-science-with-r/data.zip">data files</a></p></li>
+<li><p>Extract the data files to the C:/Workshop/Data directory.</p></li>
+<li><p>Verify the contents of the Movies.txt file you extracted.</p></li>
+<li><p>Set your working directory to “C:/Workshop/Data”.</p></li>
+<li><p>Load the data from “movies2.txt” to a variable called “movies”.</p></li>
+<li><p>Take a peek at data with the “head” command.</p></li>
 </ol>
-</div>
-<div id="install-rstudio" class="section level3">
-<h3>Install RStudio</h3>
-<ol start="3" style="list-style-type: decimal">
-<li><p>Navigate to the <a href="https://www.rstudio.com/products/rstudio/download/">RStudio website</a> and download the latest version of RStudio for your specific operating system.</p></li>
-<li><p>Run the installer with the default settings to install R studio on your machine.</p></li>
-</ol>
-</div>
-<div id="hello-world" class="section level3">
-<h3>Hello World</h3>
-<ol start="5" style="list-style-type: decimal">
-<li><p>Open RStudio</p></li>
-<li><p>Assign a character string to a variable</p></li>
-</ol>
-<pre class="r"><code>x &lt;- &quot;Hello World!&quot;</code></pre>
-<ol start="7" style="list-style-type: decimal">
-<li>Print the variable</li>
-</ol>
-<pre class="r"><code>print(x)</code></pre>
-<pre><code>## [1] &quot;Hello World!&quot;</code></pre>
+<pre><code>##                   Title Year Rating Runtime Critic.Score Revenue
+## 1  The Whole Nine Yards 2000      R      98          45%  $57.3M
+## 2             Gladiator 2000      R     155          76% $187.3M
+## 3      Cirque du Soleil 2000      G      39          45%  $13.4M
+## 4              Dinosaur 2000     PG      82          65% $135.6M
+## 5     Big Momma's House 2000  PG-13      99          30%   $0.5M
+## 6 Gone in Sixty Seconds 2000  PG-13     118          24% $101.0M</code></pre>
 <ol start="8" style="list-style-type: decimal">
-<li>Verify you see the result (above) displayed in your interactive console.</li>
+<li>Inspect the column names.</li>
+</ol>
+<pre><code>## [1] &quot;Title&quot;        &quot;Year&quot;         &quot;Rating&quot;       &quot;Runtime&quot;     
+## [5] &quot;Critic.Score&quot; &quot;Revenue&quot;</code></pre>
+</div>
+<div id="problem-1-box-office-column-name-is-incorrect" class="section level3">
+<h3>Problem 1: Box Office column name is incorrect</h3>
+<ol start="9" style="list-style-type: decimal">
+<li>Inspect the incorrect column name (i.e. “Revenue”“).</li>
+</ol>
+<pre><code>## [1] &quot;Revenue&quot;</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li><p>Rename the incorrect column to “Box.Office”.</p></li>
+<li><p>Verify that problem 1 is solved.</p></li>
+</ol>
+<pre><code>## [1] &quot;Title&quot;        &quot;Year&quot;         &quot;Rating&quot;       &quot;Runtime&quot;     
+## [5] &quot;Critic.Score&quot; &quot;Box.Office&quot;</code></pre>
+</div>
+<div id="problem-2-missing-values" class="section level3">
+<h3>Problem 2: Missing values</h3>
+<ol start="12" style="list-style-type: decimal">
+<li>Count the missing (i.e. NA) values.</li>
+</ol>
+<pre><code>## [1] 2</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li><p>Exclude rows with missing values.</p></li>
+<li><p>Verify that Problem 2 is solved.</p></li>
+</ol>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="problem-3-units-of-measure-in-critic-score-column" class="section level3">
+<h3>Problem 3: Units of measure in Critic Score column</h3>
+<ol start="15" style="list-style-type: decimal">
+<li>Peek at the critic score column.</li>
+</ol>
+<pre><code>## [1] 45% 76% 45% 65% 30% 24%
+## 102 Levels: 0% 1% 10% 100% 11% 12% 13% 14% 15% 16% 17% 18% 19% 2% ... NA%</code></pre>
+<ol start="16" style="list-style-type: decimal">
+<li>Verify that we cannot perform mathematical operations on the column.<br />
+<strong>NOTE: This next line will throw an error</strong></li>
+</ol>
+<pre><code>## Warning in mean.default(movies$Critic.Score): argument is not numeric or
+## logical: returning NA</code></pre>
+<pre><code>## [1] NA</code></pre>
+<ol start="17" style="list-style-type: decimal">
+<li>Determine the data type of the column.</li>
+</ol>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<ol start="18" style="list-style-type: decimal">
+<li><p>Cast from factor to a character string.</p></li>
+<li><p>Verify the values are now character strings.</p></li>
+</ol>
+<pre><code>## [1] &quot;45%&quot; &quot;76%&quot; &quot;45%&quot; &quot;65%&quot; &quot;30%&quot; &quot;24%&quot;</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<ol start="20" style="list-style-type: decimal">
+<li><p>Eliminate the unit of measure (i.e. “%”).</p></li>
+<li><p>Verify the unit of measure has been eliminated.</p></li>
+</ol>
+<pre><code>## [1] &quot;45&quot; &quot;76&quot; &quot;45&quot; &quot;65&quot; &quot;30&quot; &quot;24&quot;</code></pre>
+<ol start="22" style="list-style-type: decimal">
+<li>Cast the character string to integer.</li>
+</ol>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<ol start="23" style="list-style-type: decimal">
+<li>Verify the values are now integers.</li>
+</ol>
+<pre><code>## [1] 45 76 45 65 30 24</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<ol start="24" style="list-style-type: decimal">
+<li>Verify that we can now perform mathematical operations.</li>
+</ol>
+<pre><code>## [1] NA</code></pre>
+</div>
+<div id="problem-4-box-office-uses-three-units-of-measure" class="section level3">
+<h3>Problem 4: Box Office uses three units of measure</h3>
+<ol start="25" style="list-style-type: decimal">
+<li>Inspect the Box Office column.</li>
+</ol>
+<pre><code>## [1] $57.3M  $187.3M $13.4M  $135.6M $0.5M   $101.0M
+## 1367 Levels: $0.1M $0.2M $0.3M $0.4M $0.5M $0.6M $0.7M $0.8M $0.9M ... $99.9k</code></pre>
+<ol start="26" style="list-style-type: decimal">
+<li><p>Create a function to convert box office revenue to a single unit of measure (i.e. millions of USD).</p></li>
+<li><p>Convert box office to single unit of measure.</p></li>
+<li><p>Verify that Problem 4 has been solved.</p></li>
+</ol>
+<pre><code>## [1]  57.3 187.3  13.4 135.6   0.5 101.0</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre><code>## [1] 40.67519</code></pre>
+</div>
+<div id="export-the-data" class="section level3">
+<h3>Export the data</h3>
+<ol start="29" style="list-style-type: decimal">
+<li><p>Export the data to a CSV file called “Movies3.csv”.</p></li>
+<li><p>Verify the new CSV file exists in your C:/Workshop directory.</p></li>
+<li><p>Verify the file’s contents by opening the file.</p></li>
 </ol>
 </div>
-<div id="install-additional-packages" class="section level3">
-<h3>Install additional packages</h3>
-<ol start="9" style="list-style-type: decimal">
-<li>Download and install the following packages using the following commands.</li>
+<div id="bonus-problem-replace-joes-analysis-software" class="section level3">
+<h3>Bonus Problem: Replace Joe’s Analysis Software</h3>
+<ol start="32" style="list-style-type: decimal">
+<li><p>Load the dplyr package</p></li>
+<li><p>Select Year, Rating, and Box.Office columns</p></li>
+<li><p>Filter to include only PG-13 movies</p></li>
+<li><p>Create new revenue column ($B)</p></li>
+<li><p>Group by Year</p></li>
+<li><p>Summarize by Year</p></li>
+<li><p>Sort rows by Year (ascending)</p></li>
+<li><p>Display results</p></li>
 </ol>
-<pre class="r"><code>install.packages(&quot;dplyr&quot;)
-
-install.packages(&quot;moments&quot;)
-
-install.packages(&quot;corrgram&quot;)
-
-install.packages(&quot;lattice&quot;)
-
-install.packages(&quot;ggplot2&quot;)
-
-install.packages(&quot;ff&quot;)
-
-install.packages(&quot;biglm&quot;)
-
-install.packages(&quot;tree&quot;)
-
-install.packages(&quot;caret&quot;)
-
-install.packages(&quot;e1071&quot;)
-
-install.packages(&quot;nnet&quot;)
-
-install.packages(&quot;shiny&quot;)</code></pre>
+<pre><code>## # A tibble: 16 x 2
+##     Year Total.Revenue
+##    &lt;int&gt;         &lt;dbl&gt;
+##  1  2000      2.143500
+##  2  2001      3.574001
+##  3  2002      4.074959
+##  4  2003      4.101919
+##  5  2004      3.890642
+##  6  2005      4.334340
+##  7  2006      4.319362
+##  8  2007      4.106065
+##  9  2008      5.200213
+## 10  2009      5.315812
+## 11  2010      4.251306
+## 12  2011      5.388772
+## 13  2012      5.220716
+## 14  2013      5.089510
+## 15  2014      4.207022
+## 16  2015      1.654005</code></pre>
+<ol start="40" style="list-style-type: decimal">
+<li><p>Chain dplyr methods</p></li>
+<li><p>Display results</p></li>
+</ol>
+<pre><code>##    Year Total.Revenue
+## 1  2000      2.143500
+## 2  2001      3.574001
+## 3  2002      4.074959
+## 4  2003      4.101919
+## 5  2004      3.890642
+## 6  2005      4.334340
+## 7  2006      4.319362
+## 8  2007      4.106065
+## 9  2008      5.200213
+## 10 2009      5.315812
+## 11 2010      4.251306
+## 12 2011      5.388772
+## 13 2012      5.220716
+## 14 2013      5.089510
+## 15 2014      4.207022
+## 16 2015      1.654005</code></pre>
 </div>
 </div>
 

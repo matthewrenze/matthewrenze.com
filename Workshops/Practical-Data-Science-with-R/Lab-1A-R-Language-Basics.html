@@ -119,66 +119,198 @@ $(document).ready(function () {
 </div>
 
 
-<div id="lab-0-hello-world" class="section level1">
-<h1>Lab 0: Hello World</h1>
-<div id="install-r" class="section level3">
-<h3>Install R</h3>
+<div id="lab-1a-r-language-basics-easy" class="section level1">
+<h1>Lab 1A: R Language Basics (Easy)</h1>
+<div id="data-types" class="section level3">
+<h3>Data Types</h3>
 <ol style="list-style-type: decimal">
-<li><p>Navigate to the <a href="https://cran.r-project.org/bin/windows/base/">R website</a> and download the latest version of R for your specific operating system.</p></li>
-<li><p>Run the installer with the default settings to install R on your machine.</p></li>
+<li>Creating and print a logical.</li>
 </ol>
-</div>
-<div id="install-rstudio" class="section level3">
-<h3>Install RStudio</h3>
+<pre class="r"><code>l &lt;- TRUE
+l</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Create and print an integer.</li>
+</ol>
+<pre class="r"><code>i &lt;- 123L
+i</code></pre>
+<pre><code>## [1] 123</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Navigate to the <a href="https://www.rstudio.com/products/rstudio/download/">RStudio website</a> and download the latest version of RStudio for your specific operating system.</p></li>
-<li><p>Run the installer with the default settings to install R studio on your machine.</p></li>
+<li>Create and print a numeric.</li>
 </ol>
-</div>
-<div id="hello-world" class="section level3">
-<h3>Hello World</h3>
+<pre class="r"><code>n &lt;- 1.23
+n</code></pre>
+<pre><code>## [1] 1.23</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Create and print a character string.</li>
+</ol>
+<pre class="r"><code>c &lt;- &quot;ABC 123&quot;
+c</code></pre>
+<pre><code>## [1] &quot;ABC 123&quot;</code></pre>
 <ol start="5" style="list-style-type: decimal">
-<li><p>Open RStudio</p></li>
-<li><p>Assign a character string to a variable</p></li>
+<li>Create and invoke a function.</li>
 </ol>
-<pre class="r"><code>x &lt;- &quot;Hello World!&quot;</code></pre>
-<ol start="7" style="list-style-type: decimal">
-<li>Print the variable</li>
-</ol>
-<pre class="r"><code>print(x)</code></pre>
-<pre><code>## [1] &quot;Hello World!&quot;</code></pre>
-<ol start="8" style="list-style-type: decimal">
-<li>Verify you see the result (above) displayed in your interactive console.</li>
-</ol>
+<pre class="r"><code>f &lt;- function(x) { x + 1 }
+f(2)</code></pre>
+<pre><code>## [1] 3</code></pre>
 </div>
-<div id="install-additional-packages" class="section level3">
-<h3>Install additional packages</h3>
-<ol start="9" style="list-style-type: decimal">
-<li>Download and install the following packages using the following commands.</li>
+<div id="data-structures" class="section level3">
+<h3>Data Structures</h3>
+<ol start="6" style="list-style-type: decimal">
+<li>Create and print a vector.</li>
 </ol>
-<pre class="r"><code>install.packages(&quot;dplyr&quot;)
-
-install.packages(&quot;moments&quot;)
-
-install.packages(&quot;corrgram&quot;)
-
-install.packages(&quot;lattice&quot;)
-
-install.packages(&quot;ggplot2&quot;)
-
-install.packages(&quot;ff&quot;)
-
-install.packages(&quot;biglm&quot;)
-
-install.packages(&quot;tree&quot;)
-
-install.packages(&quot;caret&quot;)
-
-install.packages(&quot;e1071&quot;)
-
-install.packages(&quot;nnet&quot;)
-
-install.packages(&quot;shiny&quot;)</code></pre>
+<pre class="r"><code>v &lt;- c(1, 2, 3);
+v</code></pre>
+<pre><code>## [1] 1 2 3</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Create and print a sequence.</li>
+</ol>
+<pre class="r"><code>s &lt;- 1:5
+s</code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Create and print a matrix.</li>
+</ol>
+<pre class="r"><code>m &lt;- matrix(
+    data = 1:6, 
+    nrow = 2, 
+    ncol = 3)
+m</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Create and print an array.</li>
+</ol>
+<pre class="r"><code>a &lt;- array(
+    data = 1:8, 
+    dim = c(2, 2, 2))
+a</code></pre>
+<pre><code>## , , 1
+## 
+##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+## 
+## , , 2
+## 
+##      [,1] [,2]
+## [1,]    5    7
+## [2,]    6    8</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>Create and print a list.</li>
+</ol>
+<pre class="r"><code>l &lt;- list(TRUE, 1L, 2.34, &quot;abc&quot;)
+l</code></pre>
+<pre><code>## [[1]]
+## [1] TRUE
+## 
+## [[2]]
+## [1] 1
+## 
+## [[3]]
+## [1] 2.34
+## 
+## [[4]]
+## [1] &quot;abc&quot;</code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>Create and print a set of factors.</li>
+</ol>
+<pre class="r"><code>factor &lt;- factor(c(&quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Female&quot;))
+factor</code></pre>
+<pre><code>## [1] Male   Female Male   Male   Female
+## Levels: Female Male</code></pre>
+<pre class="r"><code>levels(factor)</code></pre>
+<pre><code>## [1] &quot;Female&quot; &quot;Male&quot;</code></pre>
+<pre class="r"><code>unclass(factor)</code></pre>
+<pre><code>## [1] 2 1 2 2 1
+## attr(,&quot;levels&quot;)
+## [1] &quot;Female&quot; &quot;Male&quot;</code></pre>
+</div>
+<div id="data-frames" class="section level3">
+<h3>Data Frames</h3>
+<ol start="12" style="list-style-type: decimal">
+<li>Create and print a data frame.</li>
+</ol>
+<pre class="r"><code>df &lt;- data.frame(
+  Name = c(&quot;Cat&quot;, &quot;Dog&quot;, &quot;Cow&quot;, &quot;Pig&quot;), 
+  HowMany = c(5, 10, 15, 20),
+  IsPet = c(TRUE, TRUE, FALSE, FALSE))
+df</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 1  Cat       5  TRUE
+## 2  Dog      10  TRUE
+## 3  Cow      15 FALSE
+## 4  Pig      20 FALSE</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li>Index the data frame by row and column.</li>
+</ol>
+<pre class="r"><code>df[1, 2]</code></pre>
+<pre><code>## [1] 5</code></pre>
+<ol start="14" style="list-style-type: decimal">
+<li>Index the data frame by row.</li>
+</ol>
+<pre class="r"><code>df[1, ]</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 1  Cat       5  TRUE</code></pre>
+<ol start="15" style="list-style-type: decimal">
+<li>Index the data frame by column index.</li>
+</ol>
+<pre class="r"><code>df[ , 2]</code></pre>
+<pre><code>## [1]  5 10 15 20</code></pre>
+<ol start="16" style="list-style-type: decimal">
+<li>Index the data frame by column name.</li>
+</ol>
+<pre class="r"><code>df[[&quot;HowMany&quot;]]</code></pre>
+<pre><code>## [1]  5 10 15 20</code></pre>
+<ol start="17" style="list-style-type: decimal">
+<li>Index the data frame by column name (shorthand).</li>
+</ol>
+<pre class="r"><code>df$HowMany</code></pre>
+<pre><code>## [1]  5 10 15 20</code></pre>
+<ol start="18" style="list-style-type: decimal">
+<li>Subset using a vector of indexes.</li>
+</ol>
+<pre class="r"><code>df[c(2, 4), ]</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 2  Dog      10  TRUE
+## 4  Pig      20 FALSE</code></pre>
+<ol start="19" style="list-style-type: decimal">
+<li>Subset using a sequence of indexes.</li>
+</ol>
+<pre class="r"><code>df[2:4, ]</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 2  Dog      10  TRUE
+## 3  Cow      15 FALSE
+## 4  Pig      20 FALSE</code></pre>
+<ol start="20" style="list-style-type: decimal">
+<li>Subset using a vector of logicals.</li>
+</ol>
+<pre class="r"><code>df[c(TRUE, FALSE, TRUE, FALSE), ]</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 1  Cat       5  TRUE
+## 3  Cow      15 FALSE</code></pre>
+<ol start="21" style="list-style-type: decimal">
+<li>Subset using the equality operator.</li>
+</ol>
+<pre class="r"><code>df[df$IsPet == TRUE, ]</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 1  Cat       5  TRUE
+## 2  Dog      10  TRUE</code></pre>
+<ol start="22" style="list-style-type: decimal">
+<li>Subset using an inequality operator.</li>
+</ol>
+<pre class="r"><code>df[df$HowMany &gt; 10, ]</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 3  Cow      15 FALSE
+## 4  Pig      20 FALSE</code></pre>
+<ol start="23" style="list-style-type: decimal">
+<li>Subset using the match operator.</li>
+</ol>
+<pre class="r"><code>df[df$Name %in% c(&quot;Cat&quot;, &quot;Cow&quot;), ]</code></pre>
+<pre><code>##   Name HowMany IsPet
+## 1  Cat       5  TRUE
+## 3  Cow      15 FALSE</code></pre>
 </div>
 </div>
 

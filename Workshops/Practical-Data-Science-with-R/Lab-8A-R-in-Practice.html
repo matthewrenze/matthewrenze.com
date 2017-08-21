@@ -119,67 +119,155 @@ $(document).ready(function () {
 </div>
 
 
-<div id="lab-0-hello-world" class="section level1">
-<h1>Lab 0: Hello World</h1>
-<div id="install-r" class="section level3">
-<h3>Install R</h3>
+<div id="lab-8a-r-in-practice-easy" class="section level1">
+<h1>Lab 8A: R in Practice (Easy)</h1>
 <ol style="list-style-type: decimal">
-<li><p>Navigate to the <a href="https://cran.r-project.org/bin/windows/base/">R website</a> and download the latest version of R for your specific operating system.</p></li>
-<li><p>Run the installer with the default settings to install R on your machine.</p></li>
+<li>Load shiny</li>
 </ol>
-</div>
-<div id="install-rstudio" class="section level3">
-<h3>Install RStudio</h3>
+<pre class="r"><code>library(shiny)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a UI</li>
+</ol>
+<pre class="r"><code>ui &lt;- fluidPage(&quot;Hello World!&quot;)</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Navigate to the <a href="https://www.rstudio.com/products/rstudio/download/">RStudio website</a> and download the latest version of RStudio for your specific operating system.</p></li>
-<li><p>Run the installer with the default settings to install R studio on your machine.</p></li>
+<li>Create a server</li>
 </ol>
-</div>
-<div id="hello-world" class="section level3">
-<h3>Hello World</h3>
+<pre class="r"><code>server &lt;- function(input, output) {}</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Create a shiny app</li>
+</ol>
+<pre class="r"><code>shinyApp(
+    ui = ui,
+    server = server)</code></pre>
 <ol start="5" style="list-style-type: decimal">
-<li><p>Open RStudio</p></li>
-<li><p>Assign a character string to a variable</p></li>
+<li>Create a UI with I/O controls</li>
 </ol>
-<pre class="r"><code>x &lt;- &quot;Hello World!&quot;</code></pre>
+<pre class="r"><code>ui &lt;- fluidPage(
+    titlePanel(&quot;Input and Output&quot;),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput(
+                inputId = &quot;num&quot;,
+                label = &quot;Choose a Number&quot;,
+                min = 0,
+                max = 100,
+                value = 25)),
+        mainPanel(
+            textOutput(
+                outputId = &quot;text&quot;))))</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Create a server than maps input to output</li>
+</ol>
+<pre class="r"><code>server &lt;- function(input, output) {
+    output$text &lt;- renderText({
+        paste(&quot;You selected &quot;, input$num )})
+}</code></pre>
 <ol start="7" style="list-style-type: decimal">
-<li>Print the variable</li>
+<li>Create a shiny app</li>
 </ol>
-<pre class="r"><code>print(x)</code></pre>
-<pre><code>## [1] &quot;Hello World!&quot;</code></pre>
+<pre class="r"><code>shinyApp(
+    ui = ui,
+    server = server)</code></pre>
 <ol start="8" style="list-style-type: decimal">
-<li>Verify you see the result (above) displayed in your interactive console.</li>
+<li>Set the working directory</li>
 </ol>
-</div>
-<div id="install-additional-packages" class="section level3">
-<h3>Install additional packages</h3>
+<pre class="r"><code>setwd(&quot;C:/Workshop/Data&quot;)</code></pre>
 <ol start="9" style="list-style-type: decimal">
-<li>Download and install the following packages using the following commands.</li>
+<li>Load the decision tree model</li>
 </ol>
-<pre class="r"><code>install.packages(&quot;dplyr&quot;)
-
-install.packages(&quot;moments&quot;)
-
-install.packages(&quot;corrgram&quot;)
-
-install.packages(&quot;lattice&quot;)
-
-install.packages(&quot;ggplot2&quot;)
-
-install.packages(&quot;ff&quot;)
-
-install.packages(&quot;biglm&quot;)
-
-install.packages(&quot;tree&quot;)
-
-install.packages(&quot;caret&quot;)
-
-install.packages(&quot;e1071&quot;)
-
-install.packages(&quot;nnet&quot;)
-
-install.packages(&quot;shiny&quot;)</code></pre>
-</div>
+<pre class="r"><code>load(&quot;Tree.RData&quot;)</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>Load the color brewer package</li>
+</ol>
+<pre class="r"><code>library(RColorBrewer)</code></pre>
+<ol start="11" style="list-style-type: decimal">
+<li>Create a color palette</li>
+</ol>
+<pre class="r"><code>palette &lt;- brewer.pal(3, &quot;Set2&quot;)</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li>Create user interface code</li>
+</ol>
+<pre class="r"><code>ui &lt;- fluidPage(
+    titlePanel(&quot;Iris Species Predictor&quot;),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput(
+                inputId = &quot;petal.length&quot;,
+                label = &quot;Petal Length (cm)&quot;,
+                min = 1,
+                max = 7,
+                value = 4),
+            sliderInput(
+                inputId = &quot;petal.width&quot;,
+                label = &quot;Petal Width (cm)&quot;,
+                min = 0.0,
+                max = 2.5,
+                step = 0.5,
+                value = 1.5)),
+        mainPanel(
+            textOutput(
+                outputId = &quot;text&quot;),
+            plotOutput(
+                outputId = &quot;plot&quot;))))</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li>Create server code</li>
+</ol>
+<pre class="r"><code>server &lt;- function(input, output) {
+    output$text = renderText({
+        
+        # Create predictors
+        predictors &lt;- data.frame(
+            Petal.Length = input$petal.length,
+            Petal.Width = input$petal.width,
+            Sepal.Length = 0,
+            Sepal.Width = 0)
+        
+        # Make prediction
+        prediction = predict(
+            object = treeModel,
+            newdata = predictors,
+            type = &quot;class&quot;)
+        
+        # Create prediction text
+        paste(
+            &quot;The predicted species is &quot;,
+            as.character(prediction))
+    })
+    
+    output$plot = renderPlot({
+        
+        # Create a scatterplot colored by species
+        plot(
+            x = iris$Petal.Length, 
+            y = iris$Petal.Width,
+            pch = 19,
+            col = palette[as.numeric(iris$Species)],
+            main = &quot;Iris Petal Length vs. Width&quot;,
+            xlab = &quot;Petal Length (cm)&quot;,
+            ylab = &quot;Petal Width (cm)&quot;)
+        
+        # Plot the desicion boundaries
+        partition.tree(
+            treeModel,
+            label = &quot;Species&quot;,
+            add = TRUE)
+        
+        # Draw predictor on plot
+        points(
+            x = input$petal.length,
+            y = input$petal.width,
+            col = &quot;red&quot;,
+            pch = 4,
+            cex = 2,
+            lwd = 2)
+    })
+}</code></pre>
+<ol start="14" style="list-style-type: decimal">
+<li>Create a shiny app</li>
+</ol>
+<pre class="r"><code>shinyApp(
+    ui = ui,
+    server = server)</code></pre>
 </div>
 
 
