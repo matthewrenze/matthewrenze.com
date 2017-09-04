@@ -88,6 +88,11 @@ a.button{
     display: block;
 }
 
+.wikipedia {
+    background: url(images/wikipedia.png) no-repeat;
+    display: block;
+}
+
 strong, b
 {
     font-weight: bold;    
