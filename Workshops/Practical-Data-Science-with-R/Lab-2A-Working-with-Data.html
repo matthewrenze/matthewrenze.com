@@ -124,14 +124,10 @@ $(document).ready(function () {
 <div id="import-the-data" class="section level3">
 <h3>Import the Data</h3>
 <ol style="list-style-type: decimal">
-<li><p>Create a directory called “Workshop” on your C: drive.</p></li>
-<li><p>Download the <a href="http://www.matthewrenze.com/workshops/practical-data-science-with-r/data.zip">data files</a></p></li>
-<li><p>Extract the data files to the C:/Workshop/Data directory.</p></li>
-<li><p>Verify the contents of the Movies.txt file you extracted.</p></li>
-<li><p>Set your working directory.</p></li>
+<li>Set your working directory.</li>
 </ol>
 <pre class="r"><code>setwd(&quot;C:/Workshop/Data&quot;)</code></pre>
-<ol start="6" style="list-style-type: decimal">
+<ol start="2" style="list-style-type: decimal">
 <li>Load the data from the tab-delimited data file.</li>
 </ol>
 <pre class="r"><code>movies &lt;- read.table(
@@ -139,7 +135,7 @@ $(document).ready(function () {
   sep = &quot;\t&quot;, 
   header = TRUE,
   quote = &quot;\&quot;&quot;)</code></pre>
-<ol start="7" style="list-style-type: decimal">
+<ol start="3" style="list-style-type: decimal">
 <li>Take a peek at data.</li>
 </ol>
 <pre class="r"><code>head(movies)</code></pre>
@@ -150,7 +146,7 @@ $(document).ready(function () {
 ## 4              Dinosaur 2000     PG  82 min           65    $135.6M
 ## 5     Big Momma's House 2000  PG-13  99 min           30      $0.5M
 ## 6 Gone in Sixty Seconds 2000  PG-13 118 min           24    $101.0M</code></pre>
-<ol start="8" style="list-style-type: decimal">
+<ol start="4" style="list-style-type: decimal">
 <li>Inspect the column names.</li>
 </ol>
 <pre class="r"><code>names(movies)</code></pre>
@@ -159,16 +155,16 @@ $(document).ready(function () {
 </div>
 <div id="problem-1-column-name-is-incorrect" class="section level3">
 <h3>Problem 1: Column name is incorrect</h3>
-<ol start="9" style="list-style-type: decimal">
+<ol start="5" style="list-style-type: decimal">
 <li>Inspect the incorrect column name (i.e. Tomato.Meter).</li>
 </ol>
 <pre class="r"><code>names(movies)[5]</code></pre>
 <pre><code>## [1] &quot;Tomato.Meter&quot;</code></pre>
-<ol start="10" style="list-style-type: decimal">
+<ol start="6" style="list-style-type: decimal">
 <li>Rename the column to “Critic.Score”.</li>
 </ol>
 <pre class="r"><code>names(movies)[5] &lt;- &quot;Critic.Score&quot;</code></pre>
-<ol start="11" style="list-style-type: decimal">
+<ol start="7" style="list-style-type: decimal">
 <li>Verify that problem 1 is solved.</li>
 </ol>
 <pre class="r"><code>names(movies)</code></pre>
@@ -177,16 +173,16 @@ $(document).ready(function () {
 </div>
 <div id="problem-2-missing-values" class="section level3">
 <h3>Problem 2: Missing values</h3>
-<ol start="12" style="list-style-type: decimal">
+<ol start="8" style="list-style-type: decimal">
 <li>Count the missing values.</li>
 </ol>
 <pre class="r"><code>sum(is.na(movies))</code></pre>
 <pre><code>## [1] 4</code></pre>
-<ol start="13" style="list-style-type: decimal">
+<ol start="9" style="list-style-type: decimal">
 <li>Exclude rows with missing values.</li>
 </ol>
 <pre class="r"><code>movies &lt;- na.omit(movies)</code></pre>
-<ol start="14" style="list-style-type: decimal">
+<ol start="10" style="list-style-type: decimal">
 <li>Verify that Problem 2 is solved.</li>
 </ol>
 <pre class="r"><code>sum(is.na(movies))</code></pre>
@@ -194,13 +190,13 @@ $(document).ready(function () {
 </div>
 <div id="problem-3-units-of-measure-in-runtime-column" class="section level3">
 <h3>Problem 3: Units of measure in runtime column</h3>
-<ol start="15" style="list-style-type: decimal">
+<ol start="11" style="list-style-type: decimal">
 <li>Peek at the movie runtime data.</li>
 </ol>
 <pre class="r"><code>head(movies$Runtime)</code></pre>
 <pre><code>## [1] 98 min  155 min 39 min  82 min  99 min  118 min
 ## 114 Levels: 100 min 101 min 102 min 103 min 104 min 105 min ... 99 min</code></pre>
-<ol start="16" style="list-style-type: decimal">
+<ol start="12" style="list-style-type: decimal">
 <li>Verify that we cannot perform mathematical operations on the column.<br />
 <strong>NOTE: This next line will throw an error</strong></li>
 </ol>
@@ -208,43 +204,43 @@ $(document).ready(function () {
 <pre><code>## Warning in mean.default(movies$Runtime): argument is not numeric or
 ## logical: returning NA</code></pre>
 <pre><code>## [1] NA</code></pre>
-<ol start="17" style="list-style-type: decimal">
+<ol start="13" style="list-style-type: decimal">
 <li>Determine the data type.</li>
 </ol>
 <pre class="r"><code>class(movies$Runtime)</code></pre>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<ol start="18" style="list-style-type: decimal">
+<ol start="14" style="list-style-type: decimal">
 <li>Cast from factor to a character string.</li>
 </ol>
 <pre class="r"><code>runtimes &lt;- as.character(movies$Runtime)</code></pre>
-<ol start="19" style="list-style-type: decimal">
+<ol start="15" style="list-style-type: decimal">
 <li>Verify the values are now character strings.</li>
 </ol>
 <pre class="r"><code>head(runtimes)</code></pre>
 <pre><code>## [1] &quot;98 min&quot;  &quot;155 min&quot; &quot;39 min&quot;  &quot;82 min&quot;  &quot;99 min&quot;  &quot;118 min&quot;</code></pre>
 <pre class="r"><code>class(runtimes)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<ol start="20" style="list-style-type: decimal">
+<ol start="16" style="list-style-type: decimal">
 <li>Eliminate the unit of measure.</li>
 </ol>
 <pre class="r"><code>runtimes &lt;- sub(&quot; min&quot;, &quot;&quot;, runtimes)</code></pre>
-<ol start="21" style="list-style-type: decimal">
+<ol start="17" style="list-style-type: decimal">
 <li>Verify the unit of measure has been eliminated.</li>
 </ol>
 <pre class="r"><code>head(runtimes)</code></pre>
 <pre><code>## [1] &quot;98&quot;  &quot;155&quot; &quot;39&quot;  &quot;82&quot;  &quot;99&quot;  &quot;118&quot;</code></pre>
-<ol start="22" style="list-style-type: decimal">
+<ol start="18" style="list-style-type: decimal">
 <li>Cast the character string to integer.</li>
 </ol>
 <pre class="r"><code>movies$Runtime &lt;- as.integer(runtimes)</code></pre>
-<ol start="23" style="list-style-type: decimal">
+<ol start="19" style="list-style-type: decimal">
 <li>Verify the values are now integers.</li>
 </ol>
 <pre class="r"><code>head(movies$Runtime)</code></pre>
 <pre><code>## [1]  98 155  39  82  99 118</code></pre>
 <pre class="r"><code>class(movies$Runtime)</code></pre>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
-<ol start="24" style="list-style-type: decimal">
+<ol start="20" style="list-style-type: decimal">
 <li>Verify that we can now perform mathematical operations.</li>
 </ol>
 <pre class="r"><code>mean(movies$Runtime)</code></pre>
@@ -252,13 +248,13 @@ $(document).ready(function () {
 </div>
 <div id="problem-4-box-office-uses-three-units-of-measure" class="section level3">
 <h3>Problem 4: Box Office uses three units of measure</h3>
-<ol start="25" style="list-style-type: decimal">
+<ol start="21" style="list-style-type: decimal">
 <li>Inspect the Box Office column.</li>
 </ol>
 <pre class="r"><code>head(movies$Box.Office)</code></pre>
 <pre><code>## [1] $57.3M  $187.3M $13.4M  $135.6M $0.5M   $101.0M
 ## 1367 Levels: $0.1M $0.2M $0.3M $0.4M $0.5M $0.6M $0.7M $0.8M $0.9M ... $99.9k</code></pre>
-<ol start="26" style="list-style-type: decimal">
+<ol start="22" style="list-style-type: decimal">
 <li>Create a function to convert box office revenue to a single unit of measure (i.e. millions of USD).</li>
 </ol>
 <pre class="r"><code>convertBoxOffice &lt;- function(boxOffice)
@@ -277,11 +273,11 @@ $(document).ready(function () {
     numericBoxOffice * 0.000001
   }
 }</code></pre>
-<ol start="27" style="list-style-type: decimal">
+<ol start="23" style="list-style-type: decimal">
 <li>Convert box office to single unit of measure.</li>
 </ol>
 <pre class="r"><code>movies$Box.Office &lt;- sapply(movies$Box.Office, convertBoxOffice)</code></pre>
-<ol start="28" style="list-style-type: decimal">
+<ol start="24" style="list-style-type: decimal">
 <li>Verify that Problem 4 has been solved.</li>
 </ol>
 <pre class="r"><code>head(movies$Box.Office)</code></pre>
@@ -293,47 +289,47 @@ $(document).ready(function () {
 </div>
 <div id="export-the-data" class="section level3">
 <h3>Export the data</h3>
-<ol start="29" style="list-style-type: decimal">
+<ol start="25" style="list-style-type: decimal">
 <li>Export the data to a CSV file.</li>
 </ol>
 <pre class="r"><code>write.csv(movies, &quot;Movies2.csv&quot;)</code></pre>
-<ol start="30" style="list-style-type: decimal">
+<ol start="26" style="list-style-type: decimal">
 <li><p>Verify the new CSV file exists in your C:/Workshop directory.</p></li>
 <li><p>Verify the file’s contents by opening the file.</p></li>
 </ol>
 </div>
 <div id="bonus-problem-replace-joes-analysis-software" class="section level3">
 <h3>Bonus Problem: Replace Joe’s Analysis Software</h3>
-<ol start="32" style="list-style-type: decimal">
+<ol start="28" style="list-style-type: decimal">
 <li>Load the dplyr package</li>
 </ol>
 <pre class="r"><code>library(dplyr)</code></pre>
-<ol start="33" style="list-style-type: decimal">
+<ol start="29" style="list-style-type: decimal">
 <li>Select columns</li>
 </ol>
 <pre class="r"><code>temp &lt;- select(movies, Year, Rating, Box.Office)</code></pre>
-<ol start="34" style="list-style-type: decimal">
+<ol start="30" style="list-style-type: decimal">
 <li>Filter rows</li>
 </ol>
 <pre class="r"><code>temp &lt;- filter(temp, Year == 2014)</code></pre>
 <pre><code>## Warning: package 'bindrcpp' was built under R version 3.4.1</code></pre>
-<ol start="35" style="list-style-type: decimal">
+<ol start="31" style="list-style-type: decimal">
 <li>Create new revenue column ($B)</li>
 </ol>
 <pre class="r"><code>temp &lt;- mutate(temp, Revenue = Box.Office / 1000)</code></pre>
-<ol start="36" style="list-style-type: decimal">
+<ol start="32" style="list-style-type: decimal">
 <li>Group by rating</li>
 </ol>
 <pre class="r"><code>temp &lt;- group_by(temp, Rating)</code></pre>
-<ol start="37" style="list-style-type: decimal">
+<ol start="33" style="list-style-type: decimal">
 <li>Summarize by rating category</li>
 </ol>
 <pre class="r"><code>temp &lt;- summarize(temp, Total.Revenue = sum(Revenue))</code></pre>
-<ol start="38" style="list-style-type: decimal">
+<ol start="34" style="list-style-type: decimal">
 <li>Sort rows by revenue (descending)</li>
 </ol>
 <pre class="r"><code>temp &lt;- arrange(temp, desc(Total.Revenue))</code></pre>
-<ol start="39" style="list-style-type: decimal">
+<ol start="35" style="list-style-type: decimal">
 <li>Display results</li>
 </ol>
 <pre class="r"><code>print(temp)</code></pre>
@@ -344,7 +340,7 @@ $(document).ready(function () {
 ## 2      R      1.985307
 ## 3     PG      1.931452
 ## 4      G      0.159132</code></pre>
-<ol start="40" style="list-style-type: decimal">
+<ol start="36" style="list-style-type: decimal">
 <li>Chain dplyr methods</li>
 </ol>
 <pre class="r"><code>report &lt;- movies %&gt;%
@@ -355,7 +351,7 @@ $(document).ready(function () {
     summarize(Total.Revenue = sum(Revenue)) %&gt;%
     arrange(desc(Total.Revenue)) %&gt;%
     as.data.frame()</code></pre>
-<ol start="41" style="list-style-type: decimal">
+<ol start="37" style="list-style-type: decimal">
 <li>Display results</li>
 </ol>
 <pre class="r"><code>print (report)</code></pre>
