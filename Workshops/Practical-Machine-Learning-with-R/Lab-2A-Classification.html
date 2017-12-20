@@ -227,8 +227,38 @@ $(document).ready(function () {
   data = knnPredictions, 
   reference = test$Species)</code></pre>
 <ol start="6" style="list-style-type: decimal">
-<li>Inspect results print(knnMatrix)</li>
+<li>Inspect results</li>
 </ol>
+<pre class="r"><code>print(knnMatrix)</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##             Reference
+## Prediction   setosa versicolor virginica
+##   setosa         17          0         0
+##   versicolor      0         17         1
+##   virginica       0          1        14
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.96            
+##                  95% CI : (0.8629, 0.9951)
+##     No Information Rate : 0.36            
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.9398          
+##  Mcnemar's Test P-Value : NA              
+## 
+## Statistics by Class:
+## 
+##                      Class: setosa Class: versicolor Class: virginica
+## Sensitivity                   1.00            0.9444           0.9333
+## Specificity                   1.00            0.9688           0.9714
+## Pos Pred Value                1.00            0.9444           0.9333
+## Neg Pred Value                1.00            0.9688           0.9714
+## Prevalence                    0.34            0.3600           0.3000
+## Detection Rate                0.34            0.3400           0.2800
+## Detection Prevalence          0.34            0.3600           0.3000
+## Balanced Accuracy             1.00            0.9566           0.9524</code></pre>
 </div>
 <div id="predict-with-decision-tree-classifier" class="section level3">
 <h3>4. Predict with Decision Tree Classifier</h3>
