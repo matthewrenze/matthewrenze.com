@@ -458,18 +458,18 @@ $(document).ready(function () {
 <div id="deploy-the-model" class="section level3">
 <h3>7. Deploy the Model</h3>
 <ol style="list-style-type: decimal">
-<li>Determine the liklihood that Jack survives the Titanic.</li>
+<li>Determine the likelihood that Jack survives the Titanic.</li>
 </ol>
 <pre class="r"><code>predict(
   object = neuralModel,
   newdata = data.frame(
     Class = 3,
     Sex = &quot;male&quot;,
-    Age = 18, 
+    Age = 20, 
     Family = 1),
   type = &quot;prob&quot;)</code></pre>
 <pre><code>##          No       Yes
-## 1 0.8577028 0.1422972</code></pre>
+## 1 0.8598103 0.1401897</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Question: Would you bet on Jack surviving?</p></li>
 <li><p>Determine the likelihood that you would survive the Titanic.</p></li>
