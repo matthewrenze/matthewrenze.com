@@ -174,7 +174,18 @@ install.packages(&quot;nnet&quot;)
 
 install.packages(&quot;NeuralNetTools&quot;)
 
-install.packages(&quot;shiny&quot;)</code></pre>
+install.packages(&quot;shiny&quot;)
+
+install.packages(&quot;randomForest&quot;)
+
+install.packages(&quot;ReinforcementLearning&quot;)</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Install MXNet (CPU version)</li>
+</ol>
+<pre class="r"><code>cran &lt;- getOption(&quot;repos&quot;)
+cran[&quot;dmlc&quot;] &lt;- &quot;https://apache-mxnet.s3-accelerate.dualstack.amazonaws.com/R/CRAN/&quot;
+options(repos = cran)
+install.packages(&quot;mxnet&quot;)</code></pre>
 </div>
 <div id="set-up-workshop-folder" class="section level3">
 <h3>6. Set Up Workshop Folder</h3>
