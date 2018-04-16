@@ -12199,7 +12199,7 @@ memory usage: 143.2+ KB
       <th>top</th>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Kelly, Mr. James</td>
+      <td>Connolly, Miss. Kate</td>
       <td>male</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -12849,7 +12849,7 @@ dtype: int64</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="4.-Create-Training-and-Test-Set">4. Create Training and Test Set<a class="anchor-link" href="#4.-Create-Training-and-Test-Set">&#182;</a></h3>
+<h3 id="4.-Create-the-Training-and-Test-Set">4. Create the Training and Test Set<a class="anchor-link" href="#4.-Create-the-Training-and-Test-Set">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13027,7 +13027,7 @@ dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:    0.4s finished
+<pre>[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:    3.0s finished
 </pre>
 </div>
 </div>
@@ -13364,7 +13364,7 @@ dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:    0.1s finished
+<pre>[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:    1.3s finished
 </pre>
 </div>
 </div>
@@ -13707,7 +13707,7 @@ dtype: int64</pre>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:   33.6s finished
+<pre>[Parallel(n_jobs=1)]: Done  50 out of  50 | elapsed:  2.0min finished
 </pre>
 </div>
 </div>
@@ -14228,7 +14228,7 @@ NNet: 0.79 +/- 0.027 accuracy
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Question: How likely is it that Jack will survive the Titanic?</p>
+<p>Question to be answered: How likely is it that Jack will survive the Titanic?</p>
 
 </div>
 </div>
@@ -14248,7 +14248,7 @@ NNet: 0.79 +/- 0.027 accuracy
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_jack</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Class&#39;</span><span class="p">,</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">,</span> <span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;Family&#39;</span><span class="p">],</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">,</span> <span class="s2">&quot;Female&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Family&quot;</span><span class="p">],</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
 </pre></div>
 
@@ -14268,7 +14268,7 @@ NNet: 0.79 +/- 0.027 accuracy
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">final_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_jack</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -14284,7 +14284,7 @@ NNet: 0.79 +/- 0.027 accuracy
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[59]:</div>
+<div class="prompt output_prompt">Out[58]:</div>
 
 
 
@@ -14310,7 +14310,7 @@ NNet: 0.79 +/- 0.027 accuracy
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">final_model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_jack</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
@@ -14326,7 +14326,7 @@ NNet: 0.79 +/- 0.027 accuracy
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[61]:</div>
+<div class="prompt output_prompt">Out[59]:</div>
 
 
 
