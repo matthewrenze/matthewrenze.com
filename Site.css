@@ -73,6 +73,11 @@ a.button{
     display:block;
 }
 
+.rstudio{
+    background: url(images/rstudio.png) no-repeat;
+    display: block;
+}
+
 .stack-overflow{
     background: url(images/stack-overflow.png) no-repeat;
     display: block;
