@@ -155,7 +155,7 @@ nav ul li a:visited
 {
     color: #707070;
     text-decoration: none;
-    padding-right: 20px;
+    padding-right: 10px;
 }
 
 nav ul li a:hover
@@ -277,13 +277,14 @@ article.articles section
     border-top-color: #DBDBDB;    
 }
 
+article.events section,
 article.presentations section 
 {
     min-height: 100px;
     padding-top: 8px;
     border-top: solid;
     border-top-width: 1px;
-    border-top-color: #DBDBDB;    
+    border-top-color: #DBDBDB;
 }
 
 article.software section 
