@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/312fec84-8570-45f0-8f4e-304e1b8effb1/resourceGroups/Default-Web-CentralUS/providers/Microsoft.Web/sites/matthewrenze",
+    "appService.deploySubpath": ""
+}
