@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Choosing R vs. Python for Data Science - Matthew Renze</title>
+    <meta name="description" content="Learn when to choose R vs. Python for data science" />
+    <meta name="keywords" content="matthew renze, data science, python, r"/>
+    <meta name="author" content="Matthew Renze" />
+    <meta property="og:title" content="Choosing R vs. Python for Data Science " />
+    <meta property="og:image" content="http://www.matthewrenze.com/articles/choosing-r-vs-python-for-data-science/small.png"/>
+    <meta property="og:url" content="http://www.matthewrenze.com/articles/choosing-r-vs-python-for-data-science" />
+    <meta property="og:site_name" content="Matthew Renze"/>
+    <meta property="og:type" content="article"/>
+    <link href="../../site.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-34791648-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+ </head>
+<body>
+    <header>
+        <h1>Matthew Renze</h1>
+        <nav>
+            <ul>
+                <li><a href="/home.html">Home</a></li>
+                <li><a href="/articles.html">Articles</a></li>
+                <li><a href="/courses.html">Courses</a></li>
+                <li><a href="/presentations.html">Presentations</a></li>
+                <li><a href="/workshops.html">Workshops</a></li>
+                <li><a href="/events.html">Events</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <article class="article">
+        <header>
+            <h1>Choosing R vs. Python for Data Science</h1>            
+        </header>
+        <p>
+            Learn when to choose R vs. Python for data science.<br/>
+            <br/>
+            Author: <a href="/about.html">Matthew Renze</a><br/>
+            Posted: 2018-09-19
+        </p>
+        <a href="image.png">
+            <img width="256" style="margin-left: 15px" class="float-right" src="/articles/choosing-r-vs-python-for-data-science/small.png" alt="Choosing R vs. Python for Data Science"/>
+        </a>
+        <div>
+            <p>
+                When you're first starting out with data science, you will likely have many questions. 
+                However, one question that seems to come up quite frequently is: 
+                <em>Which language should I choose for data science?</em>
+            </p>
+            <p>
+                Data scientists generally use either <a href="https://www.r-project.org/" target="_blank">R</a> or <a href="https://www.python.org/" target="_blank">Python</a> for the majority of all data science work. 
+                In addition, these two languages are roughly equal in terms of their popularity. 
+                So, the question effectively becomes: <em>Should I choose R or Python for data science?</em>
+            </p>
+            <p>
+                Each of these two languages has various pros and cons. 
+                In addition, there are often situations where one language is more effective than the other. 
+                While I'd love to say there is a one-size-fits-all answer to this question, unfortunately, the only real answer is: <em>It depends. </em>
+            </p>
+            <p>
+                The more important question, in my opinion, is: <em>When should I choose R vs. Python for data science? </em>
+            </p>
+            <p>
+                 To help you decide which language to choose for each situation, we'll discuss several scenarios where one language might be more advantageous than the other. 
+                 This information is based on my own experience over many years using both of these languages for data science.
+            </p>
+            <h2>
+                Data Collection
+            </h2>
+            <p>
+                 When it comes to scraping websites, calling APIs, or reading data files, I generally prefer using Python. 
+                 I started out as a software developer, so I find Python's interaction with the web, APIs, and file I/O to be very clean and intuitive. 
+                 However, when it comes to connecting to random data sources, R has the widest support I've ever seen in any programming language.
+            </p>
+            <h2>
+                Data Munging
+            </h2>
+            <p>
+                 R has very powerful tools for slicing, dicing, transforming, and cleaning data. 
+                 So, I generally prefer using R for most data-munging tasks. 
+                 In addition, because almost 80% of the work involved in any data science project is data munging, R is generally my go-to language for most data science work. 
+                 However, Python has been rapidly catching up with R in the data-munging space over the past few years.
+            </p>
+            <h2>
+                Data Analysis
+            </h2>
+            <p>
+                 R was created by statisticians, for statisticians, to perform data analysis. 
+                 So, R has a significant advantage over Python in this department. 
+                 Any time I have a scenario where the bulk of the work will involve data analysis, I will almost always choose R over Python. 
+                 In addition, given how much time is spent with exploratory data analysis, once again, R is generally my go-to language for most data science work.
+            </p>
+            <h2>
+                Data Visualization
+            </h2>
+            <p>
+                Both R and Python have very powerful data visualization capabilities. 
+                They both have tools for creating quick and dirty charts and graphs or more advanced data visualizations. 
+                However, I prefer creating data visualization with R using <a href="https://www.rstudio.com/" target="_blank">RStudio</a> because I can interactively develop the data visualizations in the IDE.
+                Every Python IDE I've tried forces me to use pop-up windows.
+            </p>
+            <h2>
+                Machine Learning
+            </h2>
+            <p>
+               Both R and Python have excellent support for machine learning. 
+               Packages like <a href="https://github.com/topepo/caret" target="_blank">caret</a> (in R) and <a href="http://scikit-learn.org/" target="_blank">scikit learn</a> (in Python) allow you to automate much of the heavy lifting involved with training, testing, and evaluating machine-learning models. 
+               In addition, they both have hundreds of ML algorithms to choose from. 
+               However, Python is the clear winner for deep learning with frameworks like <a href="https://www.tensorflow.org/" target="_blank">TensorFlow</a>.
+            </p>
+            <h2>
+                Deploying to Production
+            </h2>
+            <p>
+                There are various ways to deploy either R or Python code into production. 
+                For quick executable scripts, Python is my first choice. 
+                For simple web-based data apps, I use R with <a href="https://shiny.rstudio.com/" target="_blank">Shiny</a>. For reproducible research, I use either R or Python with <a href="http://jupyter.org/" target="_blank">Jupyter</a> notebooks. For integration into enterprise applications, either language works equally well, since I encapsulate my R or Python code as a microservice, interfaced via a REST API.
+            </p>
+            <h2>
+                General-Purpose Programming
+            </h2>
+            <p>
+               If your project involves a large amount of general-purpose programming, in addition to data science work, Python is clearly the superior choice. 
+               However, once again, my recommendation is to encapsulate data science code in its own self-contained microservice. 
+               This means that you can call this code effortlessly using any general-purpose language like C# or Java. 
+               So, in this case, choosing R vs. Python essentially makes no difference.
+            </p>
+            <h2>
+               Learning Data Science
+            </h2>
+            <p>
+               Finally, if you're just getting started with learning data science, I generally recommend two things. 
+               If you're very comfortable with C-like programming languages, Python will feel very natural to you while you're learning data science concepts. 
+               However, R was created in academia for teaching data science to students, so it does a much better job, in my opinion, as a learning tool for these data science concepts.
+            </p>
+            <h2>
+               Choose the Right Tool for the Job
+            </h2>
+            <p>
+               The key takeaway here is that there is no one perfect language for data science. 
+               Each of these languages has various pros and cons. 
+               Python might make the most sense in one scenario, while R might make more sense in another scenario.
+            </p>
+            <p>
+               What is most important is that you learn both languages and their pros and cons. 
+               Then choose whichever tool is best for the job at hand.
+            </p>
+            <p>
+               If you're interested in learning more about data science with R and Python, please check out my online <a href="https://www.matthewrenze.com/courses.html" target="_blank">courses</a> and on-site    <a href="https://www.matthewrenze.com/workshops.html" target="_blank">workshops</a>.
+            </p>
+        </div>
+        <p>
+            Share this article:&nbsp;
+            <a class="button" href="https://facebook.com/sharer.php?u=http://www.matthewrenze.com/articles/choosing-r-vs-python-for-data-science" target="_blank">
+                <img src="/images/facebook.png" alt="Share on Facebook"/>
+            </a>
+            <a class="button" href="https://twitter.com/intent/tweet?url=http://www.matthewrenze.com/articles/choosing-r-vs-python-for-data-science&text=choosing-r-vs-python-for-data-science&via=MatthewRenze" target="_blank">
+                <img src="/images/twitter.png" alt="Share on Twitter"/>
+            </a>
+            <a class="button" href="https://www.linkedin.com/shareArticle?mini=true&url=http://www.matthewrenze.com/articles/choosing-r-vs-python-for-data-science&title=choosing-r-vs-python-for-data-science" target="_blank">
+                <img src="/images/linked-in.png" alt="Share on LinkedIn"/>
+            </a>
+            <a class="button" href="https://plus.google.com/share?url=http://www.matthewrenze.com/articles/choosing-r-vs-python-for-data-science" target="_blank">
+                <img src="/images/googleplus.png" alt="Share on Google+"/>
+            </a>
+        </p>
+    </article>
+    <footer>
+        <p>&copy; 2018 Matthew Renze</p>
+    </footer>
+</body>
+</html>
