@@ -259,7 +259,8 @@ article.articles img.thumbnail
 }
 
 article.software img.thumbnail,
-article.presentations img.thumbnail
+article.presentations img.thumbnail,
+article.webinars img.thumbnail
 {
     display: inline;
     float: right;
@@ -278,7 +279,8 @@ article.articles section
 }
 
 article.events section,
-article.presentations section 
+article.presentations section,
+article.webinars section
 {
     min-height: 100px;
     padding-top: 8px;
